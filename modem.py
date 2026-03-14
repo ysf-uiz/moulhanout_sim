@@ -305,11 +305,11 @@ def read_sms(timeout=60, pre_collected=""):
                 # and the next delete_all_sms() at the start of the next recharge.
 
                 low = body.lower()
-                if "insuffisant" in low:
+                if "insuffisant" in low or "solde insuffisant" in low:
                     return "balance_error", body
-                if "succes" in low or "success" in low:
+                if any(kw in low for kw in ["effectuee", "effectue", "succes", "success", "credite", "recharge a ete"]):
                     return "success", body
-                if any(kw in low for kw in ["rejete", "refuse", "erreur", "echoue", "failure", "failed"]):
+                if any(kw in low for kw in ["rejete", "refuse", "erreur", "echoue", "failure", "failed", "invalide", "incorrect"]):
                     return "rejected", body
                 return "unknown", body
 
