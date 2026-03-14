@@ -357,90 +357,51 @@ def _send_raw_and_wait_ok(cmd, timeout=3):
 
 def recharge(phone, price, offer):
     """Execute a recharge via USSD. Returns (status, message) tuple.
-    Uses balance check before/after as fallback when SMS is unclear.
-
-    IMPORTANT: Acquires serial_lock FIRST, then sets RECHARGE_IN_PROGRESS.
-    This eliminates the race window where other components could sneak
-    AT commands between the flag and the lock.
 
     CRITICAL: After sending ATD, we NEVER call send_at() or read_all()
     until read_sms() has captured the confirmation. Any read_all() would
     eat the +CMT: notification from the serial buffer."""
-    code = f"1391997{phone}1*{offer}"
+    code = f"1391997{phone}{price}"
 
     with config.serial_lock:
         config.RECHARGE_IN_PROGRESS = True
         try:
             logging.info(f"RECHARGE START: {phone} {price} MAD (offer={offer})")
 
-            # 1. Pre-cleanup (send_at is safe here — no SMS expected yet)
+            # 1. Pre-cleanup
             delete_all_sms()
 
             if not has_signal():
                 return "no_signal", "No signal or not registered on network"
 
-            # 2. Check balance BEFORE (send_at is safe here — no SMS expected yet)
-            balance_before = check_balance()
-            logging.info(f"RECHARGE: balance before = {balance_before}")
-
-            # 3. Configure SMS reporting (push CMT directly to serial)
-            #    Use send_at here — still safe, no SMS coming yet
+            # 2. Configure SMS push mode + flush buffer
             send_at("AT+CMGF=1", 1)
             send_at("AT+CNMI=2,2,0,0,0", 1)
-
-            # 4. Flush serial buffer — clean slate before USSD
             _flush_serial()
 
-            # 5. Send the recharge command
+            # 3. Send the recharge command
             #    CRITICAL: from here until read_sms() returns, we must NOT
             #    call send_at() or read_all() — those would eat the SMS!
             logging.info(f"RECHARGE: sending USSD command: {code}")
             ser.write((f"ATD {code};\r").encode())
 
             # Wait for SIM800L to acknowledge the dial command
-            # The modem sends "OK" or "NO CARRIER" — we read ONLY that
             time.sleep(1)
             atd_response = ""
             if ser.in_waiting:
                 atd_response = ser.read(ser.in_waiting).decode(errors="ignore")
-                # Only consume the ATD echo/response, stop before any +CMT
                 if "+CMT:" in atd_response:
-                    # Rare: SMS arrived extremely fast — put it back conceptually
-                    # by passing it to read_sms as pre-collected data
                     logging.info(f"RECHARGE: SMS arrived during ATD response!")
                 else:
                     logging.info(f"RECHARGE: ATD response: {atd_response.strip()}")
-                    atd_response = ""  # Clear it — not part of SMS
+                    atd_response = ""
 
-            # 6. Wait for confirmation SMS
+            # 4. Wait for confirmation SMS
             status, message = read_sms(timeout=60, pre_collected=atd_response)
 
-            # 7. Dialing done, hang up just in case — NOW safe to use send_at
+            # 5. Hang up
             send_at("ATH", 1)
 
-            # 8. Check balance AFTER
-            balance_after = check_balance()
-            logging.info(f"RECHARGE: balance after = {balance_after}, sms_status = {status}")
-
-            # Build info string
-            balance_info = ""
-            if balance_before is not None and balance_after is not None:
-                diff = balance_before - balance_after
-                balance_info = f" | Solde: {balance_after} MAD (diff: {diff:.2f})"
-
-            # 7. Fallback: if SMS was unclear, use balance to decide
-            if status == "unknown" and balance_before is not None and balance_after is not None:
-                diff = balance_before - balance_after
-                if diff >= float(price) * 0.8:  # allow small margin
-                    status = "success"
-                    message = (message or "") + f" [BALANCE CHECK: -{diff:.2f} MAD]"
-                    logging.info(f"RECHARGE: SMS unknown but balance dropped {diff:.2f} → SUCCESS")
-                else:
-                    status = "failed"
-                    message = (message or "") + f" [BALANCE CHECK: no change]"
-                    logging.info(f"RECHARGE: SMS unknown and balance unchanged → FAILED")
-
-            message = (message or "") + balance_info
             logging.info(f"RECHARGE FINISHED: {status} | {message}")
 
         finally:
