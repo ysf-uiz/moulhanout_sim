@@ -366,7 +366,7 @@ def recharge(phone, price, offer):
     CRITICAL: After sending ATD, we NEVER call send_at() or read_all()
     until read_sms() has captured the confirmation. Any read_all() would
     eat the +CMT: notification from the serial buffer."""
-    code = f"1391997{phone}{price}*{offer}"
+    code = f"1391997{phone}1*{offer}"
 
     with config.serial_lock:
         config.RECHARGE_IN_PROGRESS = True
