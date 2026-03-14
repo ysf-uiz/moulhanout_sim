@@ -1,0 +1,236 @@
+git pull
+remote: Enumerating objects: 9, done.
+remote: Counting objects:  11% (1/remote: Counting objects:  22% (2/remote: Counting objects:  33% (3/remote: Counting objects:  44% (4/remote: Counting objects:  55% (5/remote: Counting objects:  66% (6/remote: Counting objects:  77% (7/remote: Counting objects:  88% (8/remote: Counting objects: 100% (9/remote: Counting objects: 100% (9/9), done.
+remote: Compressing objects:  12% remote: Compressing objects:  25% remote: Compressing objects:  37% remote: Compressing objects:  50% remote: Compressing objects:  62% remote: Compressing objects:  75% remote: Compressing objects:  87% remote: Compressing objects: 100% remote: Compressing objects: 100% (8/8), done.
+remote: Total 8 (delta 0), reused 8 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (8/8), 12.32 KiB | 1.76 MiB/s, done.
+From https://github.com/ysf-uiz/moulhanout_sim
+   9aeda2b..f985c1e  main       -> origin/main
+Updating 9aeda2b..f985c1e
+Fast-forward
+ api.py      | 203 ++++++
+ config.py   |  67 ++
+ database.py | 172 +++++
+ index.py    |  47 ++
+ modem.py    | 484 ++++++++++++++
+ worker.py   | 159 +++++
+ 6 files changed, 1132 insertions(+)
+ create mode 100644 api.py
+ create mode 100644 config.py
+ create mode 100644 database.py
+ create mode 100644 index.py
+ create mode 100644 modem.py
+ create mode 100644 worker.py
+ysf@ysf:~/moulhanout_sim $ python index.py
+2026-03-14 13:35:52,491 GATEWAY STARTED
+2026-03-14 13:35:53,492 AT AT | AT
+OK
+
+2026-03-14 13:35:54,492 AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-14 13:35:57,493 AT AT+CMGDA="DEL ALL" | AT+CMGDA="DEL ALL"
+OK
+
+2026-03-14 13:35:57,493 SMS: all messages deleted
+2026-03-14 13:35:58,493 AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+ * Serving Flask app 'api'
+ * Debug mode: off
+2026-03-14 13:35:58,500 WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.8:5000
+2026-03-14 13:35:58,501 Press CTRL+C to quit
+2026-03-14 13:36:33,145 AT AT | AT
+OK
+
+2026-03-14 13:36:34,145 AT AT+CSQ | AT+CSQ
++CSQ: 22,0
+
+OK
+
+2026-03-14 13:36:35,146 AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-14 13:36:35,148 127.0.0.1 - - [14/Mar/2026 13:36:35] "GET /health HTTP/1.1" 200 -
+2026-03-14 13:36:59,495 AT AT | AT
+OK
+
+2026-03-14 13:37:00,495 AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-14 13:37:01,496 AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-14 13:37:06,497 AT AT+CUSD=1,"*580#",15 | AT+CUSD=1,"*580#",15
+OK
+
++CUSD: 2
+
+2026-03-14 13:37:16,499 BALANCE RAW: 
+2026-03-14 13:37:16,501 BALANCE: could not parse | 
+2026-03-14 13:37:33,194 AT AT | AT
+OK
+
+2026-03-14 13:37:34,194 AT AT+CSQ | AT+CSQ
++CSQ: 23,0
+
+OK
+
+2026-03-14 13:37:35,195 AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-14 13:37:35,195 127.0.0.1 - - [14/Mar/2026 13:37:35] "GET /health HTTP/1.1" 200 -
+2026-03-14 13:38:17,502 AT AT | AT
+OK
+
+2026-03-14 13:38:18,502 AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-14 13:38:19,503 AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-14 13:38:24,503 AT AT+CUSD=1,"*580#",15 | AT+CUSD=1,"*580#",15
+OK
+
++CUSD: 2
+
+2026-03-14 13:38:34,507 BALANCE RAW: 
+2026-03-14 13:38:34,510 BALANCE: could not parse | 
+2026-03-14 13:38:35,511 AT AT | AT
+OK
+
+2026-03-14 13:38:36,511 AT AT+CSQ | AT+CSQ
++CSQ: 23,0
+
+OK
+
+2026-03-14 13:38:37,512 AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-14 13:38:37,513 127.0.0.1 - - [14/Mar/2026 13:38:37] "GET /health HTTP/1.1" 200 -
+2026-03-14 13:39:26,214 AT AT | AT
+OK
+
+2026-03-14 13:39:27,215 AT AT+CSQ | AT+CSQ
++CSQ: 23,0
+
+OK
+
+2026-03-14 13:39:28,215 AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-14 13:39:28,216 127.0.0.1 - - [14/Mar/2026 13:39:28] "GET /health HTTP/1.1" 200 -
+2026-03-14 13:39:29,383 127.0.0.1 - - [14/Mar/2026 13:39:29] "POST /recharge HTTP/1.1" 200 -
+2026-03-14 13:39:29,383 WORKER: === START task RCH-TDWKEO7WQTGZ for 0644887730 ===
+2026-03-14 13:39:29,835 Certificate did not match expected hostname: credit.o-dev.store. Certificate: {'subject': ((('commonName', '*.web-hosting.com'),),), 'issuer': ((('countryName', 'GB'),), (('stateOrProvinceName', 'Greater Manchester'),), (('localityName', 'Salford'),), (('organizationName', 'Sectigo Limited'),), (('commonName', 'Sectigo RSA Domain Validation Secure Server CA'),)), 'version': 3, 'serialNumber': '113EA1A70DFC5602396555E6F2080658', 'notBefore': 'Mar 13 00:00:00 2025 GMT', 'notAfter': 'Apr  5 23:59:59 2026 GMT', 'subjectAltName': (('DNS', '*.web-hosting.com'), ('DNS', 'web-hosting.com')), 'OCSP': ('http://ocsp.sectigo.com',), 'caIssuers': ('http://crt.sectigo.com/SectigoRSADomainValidationSecureServerCA.crt',)}
+2026-03-14 13:39:29,835 CALLBACK RCH-TDWKEO7WQTGZ: failed (attempt 1/1) | HTTPSConnectionPool(host='credit.o-dev.store', port=443): Max retries exceeded with url: /api/gateway/callback (Caused by SSLError(CertificateError("hostname 'credit.o-dev.store' doesn't match either of '*.web-hosting.com', 'web-hosting.com'")))
+2026-03-14 13:39:29,836 CALLBACK RCH-TDWKEO7WQTGZ: ALL 1 RETRIES FAILED — status=processing
+2026-03-14 13:39:29,837 RECHARGE START: 0644887730 5 MAD (offer=0)
+2026-03-14 13:39:30,837 AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-14 13:39:32,171 127.0.0.1 - - [14/Mar/2026 13:39:32] "GET /health HTTP/1.1" 200 -
+2026-03-14 13:39:33,837 AT AT+CMGDA="DEL ALL" | AT+CMGDA="DEL ALL"
+OK
+
+2026-03-14 13:39:33,838 SMS: all messages deleted
+2026-03-14 13:39:34,511 MODEM HEALTH: skipped — recharge in progress
+2026-03-14 13:39:34,838 AT AT+CSQ | AT+CSQ
++CSQ: 22,0
+
+OK
+
+2026-03-14 13:39:35,838 AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-14 13:39:36,839 AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-14 13:39:41,839 AT AT+CUSD=1,"*580#",15 | AT+CUSD=1,"*580#",15
+OK
+
++CUSD: 2
+
+2026-03-14 13:39:51,842 BALANCE RAW: 
+2026-03-14 13:39:51,842 BALANCE: could not parse | 
+2026-03-14 13:39:51,842 RECHARGE: balance before = None
+2026-03-14 13:39:52,842 AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-14 13:39:53,843 AT AT+CNMI=2,2,0,0,0 | AT+CNMI=2,2,0,0,0
+OK
+
+2026-03-14 13:39:53,843 RECHARGE: sending USSD command: 139199706448877305*0
+2026-03-14 13:39:54,843 RECHARGE: ATD response: ATD 139199706448877305*0;
+OK
+2026-03-14 13:39:54,843 SMS: waiting for confirmation (timeout=60s, pre=0 bytes)...
+2026-03-14 13:40:05,346 SMS RAW CHUNK: '\r\n+CMT: "139","","26/03/14,13:39:56+00"\r\nLa recharge a ete effectuee, le compte Recharge du client 0644887730 a ete credite de 5 DH. Votre solde restant est de 360 DH.\r\n'
+2026-03-14 13:40:07,350 SMS LOGGED: 139
+2026-03-14 13:40:08,350 AT ATH | ATH
+OK
+
+2026-03-14 13:40:09,351 AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-14 13:40:14,351 AT AT+CUSD=1,"*580#",15 | AT+CUSD=1,"*580#",15
+OK
+
++CUSD: 2
+
+2026-03-14 13:40:24,354 BALANCE RAW: 
+2026-03-14 13:40:24,355 BALANCE: could not parse | 
+2026-03-14 13:40:24,355 RECHARGE: balance after = None, sms_status = unknown
+2026-03-14 13:40:24,355 RECHARGE FINISHED: unknown | La recharge a ete effectuee, le compte Recharge du client 0644887730 a ete credite de 5 DH. Votre solde restant est de 360 DH.
+2026-03-14 13:40:24,367 ORDER RCH-TDWKEO7WQTGZ -> unknown | La recharge a ete effectuee, le compte Recharge du client 0644887730 a ete credite de 5 DH. Votre solde restant est de 360 DH.
+2026-03-14 13:40:24,835 Certificate did not match expected hostname: credit.o-dev.store. Certificate: {'subject': ((('commonName', '*.web-hosting.com'),),), 'issuer': ((('countryName', 'GB'),), (('stateOrProvinceName', 'Greater Manchester'),), (('localityName', 'Salford'),), (('organizationName', 'Sectigo Limited'),), (('commonName', 'Sectigo RSA Domain Validation Secure Server CA'),)), 'version': 3, 'serialNumber': '113EA1A70DFC5602396555E6F2080658', 'notBefore': 'Mar 13 00:00:00 2025 GMT', 'notAfter': 'Apr  5 23:59:59 2026 GMT', 'subjectAltName': (('DNS', '*.web-hosting.com'), ('DNS', 'web-hosting.com')), 'OCSP': ('http://ocsp.sectigo.com',), 'caIssuers': ('http://crt.sectigo.com/SectigoRSADomainValidationSecureServerCA.crt',)}
+2026-03-14 13:40:24,836 CALLBACK RCH-TDWKEO7WQTGZ: failed (attempt 1/5) | HTTPSConnectionPool(host='credit.o-dev.store', port=443): Max retries exceeded with url: /api/gateway/callback (Caused by SSLError(CertificateError("hostname 'credit.o-dev.store' doesn't match either of '*.web-hosting.com', 'web-hosting.com'")))
+2026-03-14 13:40:24,837 CALLBACK RCH-TDWKEO7WQTGZ: retrying in 2s...
+2026-03-14 13:40:27,303 Certificate did not match expected hostname: credit.o-dev.store. Certificate: {'subject': ((('commonName', '*.web-hosting.com'),),), 'issuer': ((('countryName', 'GB'),), (('stateOrProvinceName', 'Greater Manchester'),), (('localityName', 'Salford'),), (('organizationName', 'Sectigo Limited'),), (('commonName', 'Sectigo RSA Domain Validation Secure Server CA'),)), 'version': 3, 'serialNumber': '113EA1A70DFC5602396555E6F2080658', 'notBefore': 'Mar 13 00:00:00 2025 GMT', 'notAfter': 'Apr  5 23:59:59 2026 GMT', 'subjectAltName': (('DNS', '*.web-hosting.com'), ('DNS', 'web-hosting.com')), 'OCSP': ('http://ocsp.sectigo.com',), 'caIssuers': ('http://crt.sectigo.com/SectigoRSADomainValidationSecureServerCA.crt',)}
+2026-03-14 13:40:27,304 CALLBACK RCH-TDWKEO7WQTGZ: failed (attempt 2/5) | HTTPSConnectionPool(host='credit.o-dev.store', port=443): Max retries exceeded with url: /api/gateway/callback (Caused by SSLError(CertificateError("hostname 'credit.o-dev.store' doesn't match either of '*.web-hosting.com', 'web-hosting.com'")))
+2026-03-14 13:40:27,305 CALLBACK RCH-TDWKEO7WQTGZ: retrying in 5s...
+2026-03-14 13:40:32,774 Certificate did not match expected hostname: credit.o-dev.store. Certificate: {'subject': ((('commonName', '*.web-hosting.com'),),), 'issuer': ((('countryName', 'GB'),), (('stateOrProvinceName', 'Greater Manchester'),), (('localityName', 'Salford'),), (('organizationName', 'Sectigo Limited'),), (('commonName', 'Sectigo RSA Domain Validation Secure Server CA'),)), 'version': 3, 'serialNumber': '113EA1A70DFC5602396555E6F2080658', 'notBefore': 'Mar 13 00:00:00 2025 GMT', 'notAfter': 'Apr  5 23:59:59 2026 GMT', 'subjectAltName': (('DNS', '*.web-hosting.com'), ('DNS', 'web-hosting.com')), 'OCSP': ('http://ocsp.sectigo.com',), 'caIssuers': ('http://crt.sectigo.com/SectigoRSADomainValidationSecureServerCA.crt',)}
+2026-03-14 13:40:32,775 CALLBACK RCH-TDWKEO7WQTGZ: failed (attempt 3/5) | HTTPSConnectionPool(host='credit.o-dev.store', port=443): Max retries exceeded with url: /api/gateway/callback (Caused by SSLError(CertificateError("hostname 'credit.o-dev.store' doesn't match either of '*.web-hosting.com', 'web-hosting.com'")))
+2026-03-14 13:40:32,777 CALLBACK RCH-TDWKEO7WQTGZ: retrying in 10s...
+2026-03-14 13:40:33,184 AT AT | AT
+OK
+
+2026-03-14 13:40:34,184 AT AT+CSQ | AT+CSQ
++CSQ: 23,0
+
+OK
+
+2026-03-14 13:40:35,185 AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-14 13:40:35,185 127.0.0.1 - - [14/Mar/2026 13:40:35] "GET /health HTTP/1.1" 200 -
+2026-03-14 13:40:36,186 AT AT | AT
+OK
+
+2026-03-14 13:40:37,187 AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-14 13:40:38,188 AT AT+CMGF=1 | AT+CMGF=1
+OK
