@@ -1,11 +1,11 @@
 """
-worker.py — Queue consumer that processes recharge tasks ONE AT A TIME.
+worker.py — Queue consumer that processes recharge tasks ONE AT A TIME per modem.
 
-The worker is the ONLY component that executes recharges.
-It holds the modem lock for the entire recharge lifecycle:
-  lock → send USSD → wait SMS → log → cleanup → unlock → next
+Each modem gets its own worker thread consuming from its own queue.
+The worker holds the modem lock for the entire recharge lifecycle:
+  lock -> send USSD -> wait SMS -> log -> cleanup -> unlock -> next
 
-Run standalone to process one test task (without the API server):
+Run standalone to show worker info:
     python worker.py
 """
 
@@ -13,7 +13,6 @@ import time
 import logging
 import requests
 import config
-import modem
 import database
 
 
@@ -75,21 +74,23 @@ def notify_backend(order_id, status, message="", is_final=False):
 # WORKER LOOP
 # =====================
 
-def worker():
-    """Main worker loop: takes ONE task at a time from queue, executes recharge,
-    waits for SMS confirmation, then moves to the next task.
+def worker(modem_instance):
+    """Worker loop for a specific modem. Consumes from that modem's queue.
 
-    GUARANTEE: Only one recharge runs at a time. The modem is fully
+    GUARANTEE: Only one recharge runs at a time per modem. The modem is fully
     locked during the entire operation (USSD + SMS wait + cleanup)."""
+    carrier = modem_instance.carrier
+    task_queue = modem_instance.cfg["task_queue"]
+
     while True:
-        task = config.task_queue.get()
+        task = task_queue.get()
 
         phone    = task["phone"]
         price    = task["price"]
         offer    = task["offer"]
         order_id = task["order_id"]
 
-        logging.info(f"WORKER: === START task {order_id} for {phone} ===")
+        logging.info(f"[{carrier}] WORKER: === START task {order_id} for {phone} ===")
 
         # Update local DB to 'processing'
         database.update_order_status(order_id, "processing")
@@ -99,44 +100,28 @@ def worker():
 
         try:
             # Check if modem is down before attempting
-            if not config.MODEM_OK:
-                logging.error(f"ORDER {order_id}: modem down, failing task.")
+            if not modem_instance.cfg["modem_ok"]:
+                logging.error(f"[{carrier}] ORDER {order_id}: modem down, failing task.")
                 result = "failed"
                 raw_message = "Modem is down"
             else:
-                # Execute recharge (BLOCKING — holds serial_lock the entire time)
-                # modem.recharge() internally:
-                #   1. Acquires serial_lock (FIRST)
-                #   2. Sets RECHARGE_IN_PROGRESS = True (INSIDE lock — no race)
-                #   3. Delete old SMS
-                #   4. Check signal
-                #   5. Check balance before
-                #   6. Send USSD command
-                #   7. Wait for confirmation SMS (up to 60s)
-                #   8. Log SMS to message.log
-                #   9. Delete SMS from SIM
-                #  10. Check balance after
-                #  11. Fallback: compare balances if SMS unclear
-                #  12. Sets RECHARGE_IN_PROGRESS = False (INSIDE lock — no race)
-                #  13. Releases serial_lock
-                result, raw_message = modem.recharge(phone, price, offer)
+                result, raw_message = modem_instance.recharge(phone, price, offer)
 
         except Exception as e:
-            logging.error(f"ORDER {order_id}: exception during recharge | {e}")
+            logging.error(f"[{carrier}] ORDER {order_id}: exception during recharge | {e}")
             result = "failed"
             raw_message = f"Exception: {e}"
-            # Safety: clear flag in case exception happened after flag was set but before it was cleared
-            config.RECHARGE_IN_PROGRESS = False
+            modem_instance.cfg["recharge_in_progress"] = False
 
         # Update local DB with final status
         database.update_order_status(order_id, result)
-        logging.info(f"ORDER {order_id} -> {result} | {raw_message}")
+        logging.info(f"[{carrier}] ORDER {order_id} -> {result} | {raw_message}")
 
         # Notify Laravel backend with the final result (with retry)
         notify_backend(order_id, result, raw_message, is_final=True)
 
-        config.task_queue.task_done()
-        logging.info(f"WORKER: === END task {order_id} — waiting for next ===")
+        task_queue.task_done()
+        logging.info(f"[{carrier}] WORKER: === END task {order_id} — waiting for next ===")
 
 
 # =====================
@@ -147,13 +132,12 @@ if __name__ == "__main__":
     print("=" * 40)
     print("  Worker Self-Test")
     print("=" * 40)
-    print(f"  Queue size     : {config.task_queue.qsize()}")
-    print(f"  Modem OK       : {config.MODEM_OK}")
-    print(f"  Recharge active: {config.RECHARGE_IN_PROGRESS}")
-    print(f"  DB orders      : {database.count_orders()}")
+    for carrier, cfg in config.MODEMS.items():
+        print(f"\n  [{carrier.upper()}]")
+        print(f"    Queue size     : {cfg['task_queue'].qsize()}")
+        print(f"    Modem OK       : {cfg['modem_ok']}")
+        print(f"    Recharge active: {cfg['recharge_in_progress']}")
+    print(f"\n  DB orders      : {database.count_orders()}")
     print()
-    print("  To test: put a task in the queue and call worker().")
-    print("  Example:")
-    print('    config.task_queue.put({"order_id":"TEST001","phone":"0612345678","price":"10","offer":"2"})')
-    print("    worker()  # will block until task is processed")
+    print("  To test: put a task in a modem's queue and call worker(modem_instance).")
     print("=" * 40)

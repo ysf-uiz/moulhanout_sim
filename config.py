@@ -16,20 +16,37 @@ import logging
 
 API_TOKEN        = os.environ.get("GATEWAY_TOKEN", "123456SECRET")
 API_CALLBACK_URL = os.environ.get("API_CALLBACK_URL", "https://credit.o-dev.store/api/gateway/callback")
-SERIAL_PORT      = "/dev/ttyAMA0"
-BAUDRATE         = 9600
 MIN_SIGNAL       = 5           # Minimum CSQ signal level (0-31)
 DB_PATH          = "database.db"
 
 # =====================
-# SHARED STATE
+# PER-MODEM CONFIG
 # =====================
 
-MODEM_OK              = True   # Global modem health flag (updated by modem_health_monitor)
-SIM_BALANCE           = None   # Last known SIM balance in MAD (updated by check_balance)
-RECHARGE_IN_PROGRESS  = False  # True while a recharge is executing (blocks health monitor)
-serial_lock = threading.Lock()
-task_queue  = queue.Queue()
+MODEMS = {
+    "orange": {
+        "serial_port":  "/dev/ttyAMA0",
+        "baudrate":     9600,
+        "modem_ok":     True,
+        "sim_balance":  None,
+        "recharge_in_progress": False,
+        "serial_lock":  threading.Lock(),
+        "task_queue":   queue.Queue(),
+        "recharge_code_template": "1391997{phone}{price}*{offer}",
+        "balance_ussd": "#555*4*2#",
+    },
+    "inwi": {
+        "serial_port":  "/dev/ttyAMA4",
+        "baudrate":     9600,
+        "modem_ok":     True,
+        "sim_balance":  None,
+        "recharge_in_progress": False,
+        "serial_lock":  threading.Lock(),
+        "task_queue":   queue.Queue(),
+        "recharge_code_template": "*139*{phone}*{price}*{offer}#",
+        "balance_ussd": "*139*5#",
+    },
+}
 
 # =====================
 # LOGGING
@@ -57,11 +74,14 @@ if __name__ == "__main__":
     print("=" * 40)
     print(f"  API_TOKEN      : {API_TOKEN[:4]}***")
     print(f"  CALLBACK_URL   : {API_CALLBACK_URL}")
-    print(f"  SERIAL_PORT    : {SERIAL_PORT}")
-    print(f"  BAUDRATE    : {BAUDRATE}")
-    print(f"  MIN_SIGNAL  : {MIN_SIGNAL}")
-    print(f"  DB_PATH     : {DB_PATH}")
-    print(f"  MODEM_OK    : {MODEM_OK}")
-    print(f"  Queue size  : {task_queue.qsize()}")
+    print(f"  MIN_SIGNAL     : {MIN_SIGNAL}")
+    print(f"  DB_PATH        : {DB_PATH}")
+    for carrier, cfg in MODEMS.items():
+        print(f"\n  [{carrier.upper()}]")
+        print(f"    SERIAL_PORT  : {cfg['serial_port']}")
+        print(f"    BAUDRATE     : {cfg['baudrate']}")
+        print(f"    BALANCE_USSD : {cfg['balance_ussd']}")
+        print(f"    RECHARGE_TPL : {cfg['recharge_code_template']}")
+        print(f"    Queue size   : {cfg['task_queue'].qsize()}")
     print("=" * 40)
-    print("  Config OK ✓")
+    print("  Config OK")

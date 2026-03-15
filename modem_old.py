@@ -471,3 +471,13 @@ if __name__ == "__main__":
 
     print("=" * 40)
     print(f"  Ready to recharge: {'YES' if alive and sig >= config.MIN_SIGNAL and registered else 'NO'}")
+
+    # Direct recharge: python modem.py orange 0684447232 5 *1
+    if len(sys.argv) >= 5:
+        phone = sys.argv[2]
+        price = sys.argv[3]
+        offer = sys.argv[4]
+        print(f"\n  RECHARGE: {phone} {price} MAD offer={offer}")
+        status, message = m.recharge(phone, price, offer)
+        print(f"  RESULT: {status}")
+        print(f"  MESSAGE: {message}")

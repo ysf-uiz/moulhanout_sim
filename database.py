@@ -40,6 +40,7 @@ def init_db():
             phone TEXT,
             price TEXT,
             offer TEXT,
+            carrier TEXT,
             status TEXT,
             date TEXT
         )
@@ -49,8 +50,23 @@ def init_db():
         conn.close()
 
 
+def _migrate_add_carrier():
+    """Add carrier column to existing orders table if missing."""
+    conn = _get_conn()
+    try:
+        cur = conn.execute("PRAGMA table_info(orders)")
+        columns = [row[1] for row in cur.fetchall()]
+        if "carrier" not in columns:
+            conn.execute("ALTER TABLE orders ADD COLUMN carrier TEXT DEFAULT 'orange'")
+            conn.commit()
+            logging.info("DB MIGRATION: added 'carrier' column (default='orange')")
+    finally:
+        conn.close()
+
+
 # Auto-init on import
 init_db()
+_migrate_add_carrier()
 
 
 # =====================
@@ -67,15 +83,15 @@ def order_exists(order_id):
         conn.close()
 
 
-def insert_order(order_id, phone, price, offer, status='queued'):
+def insert_order(order_id, phone, price, offer, status='queued', carrier=None):
     """Insert a new order with initial status."""
     with _db_lock:
         conn = _get_conn()
         try:
             conn.execute("""
-            INSERT INTO orders(order_id, phone, price, offer, status, date)
-            VALUES(?, ?, ?, ?, ?, datetime('now'))
-            """, (order_id, phone, price, offer, status))
+            INSERT INTO orders(order_id, phone, price, offer, carrier, status, date)
+            VALUES(?, ?, ?, ?, ?, ?, datetime('now'))
+            """, (order_id, phone, price, offer, carrier, status))
             conn.commit()
         finally:
             conn.close()
@@ -106,27 +122,41 @@ def get_order_status(order_id):
         conn.close()
 
 
-def count_orders(status=None):
-    """Count orders, optionally filtered by status."""
+def count_orders(status=None, carrier=None):
+    """Count orders, optionally filtered by status and/or carrier."""
     conn = _get_conn()
     try:
+        query = "SELECT COUNT(*) FROM orders"
+        params = []
+        conditions = []
         if status:
-            cur = conn.execute("SELECT COUNT(*) FROM orders WHERE status=?", (status,))
-        else:
-            cur = conn.execute("SELECT COUNT(*) FROM orders")
+            conditions.append("status=?")
+            params.append(status)
+        if carrier:
+            conditions.append("carrier=?")
+            params.append(carrier)
+        if conditions:
+            query += " WHERE " + " AND ".join(conditions)
+        cur = conn.execute(query, params)
         return cur.fetchone()[0]
     finally:
         conn.close()
 
 
-def get_recent_orders(limit=20):
-    """Get the most recent orders."""
+def get_recent_orders(limit=20, carrier=None):
+    """Get the most recent orders, optionally filtered by carrier."""
     conn = _get_conn()
     try:
-        cur = conn.execute("""
-        SELECT order_id, phone, price, offer, status, date
-        FROM orders ORDER BY id DESC LIMIT ?
-        """, (limit,))
+        if carrier:
+            cur = conn.execute("""
+            SELECT order_id, phone, price, offer, carrier, status, date
+            FROM orders WHERE carrier=? ORDER BY id DESC LIMIT ?
+            """, (carrier, limit))
+        else:
+            cur = conn.execute("""
+            SELECT order_id, phone, price, offer, carrier, status, date
+            FROM orders ORDER BY id DESC LIMIT ?
+            """, (limit,))
         return cur.fetchall()
     finally:
         conn.close()
@@ -160,11 +190,11 @@ if __name__ == "__main__":
     recent = get_recent_orders(5)
     if recent:
         print(f"\n  Last {len(recent)} orders:")
-        print(f"  {'Order ID':<20} {'Phone':<15} {'Price':<8} {'Status':<12} {'Date'}")
-        print(f"  {'-'*75}")
+        print(f"  {'Order ID':<20} {'Phone':<15} {'Price':<8} {'Carrier':<10} {'Status':<12} {'Date'}")
+        print(f"  {'-'*85}")
         for row in recent:
-            oid, phone, price, offer, status, date = row
-            print(f"  {oid:<20} {phone:<15} {price:<8} {status:<12} {date}")
+            oid, phone, price, offer, carrier, status, date = row
+            print(f"  {oid:<20} {phone:<15} {price:<8} {carrier or 'N/A':<10} {status:<12} {date}")
     else:
         print("\n  No orders yet.")
 
