@@ -117,6 +117,12 @@ def worker(modem_instance):
         database.update_order_status(order_id, result)
         logging.info(f"[{carrier}] ORDER {order_id} -> {result} | {raw_message}")
 
+        # Refresh balance after recharge (balance just changed)
+        try:
+            modem_instance.check_balance()
+        except Exception as e:
+            logging.warning(f"[{carrier}] ORDER {order_id}: post-recharge balance check failed | {e}")
+
         # Notify Laravel backend with the final result (with retry)
         notify_backend(order_id, result, raw_message, is_final=True)
 

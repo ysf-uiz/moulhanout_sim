@@ -122,14 +122,20 @@ class Modem:
         """Check SIM balance via USSD. The response arrives as an SMS.
         Returns balance as float or None."""
         try:
-            self.send_at('AT+CMGF=1', 1)
-            self.send_at(f'AT+CUSD=1,"{self.balance_ussd}",15', 5)
+            # Set text mode — wait for OK dynamically instead of fixed 1s sleep
+            self._send_raw_and_wait_ok('AT+CMGF=1')
 
-            # Wait for +CMTI (SMS stored notification) or +CUSD with actual balance
+            # Send USSD command — flush first, then write directly.
+            # Do NOT use send_at() here: its fixed sleep would consume and
+            # discard the async USSD/SMS response from the serial buffer.
+            self._flush_serial()
+            self.ser.write((f'AT+CUSD=1,"{self.balance_ussd}",15\r').encode())
+
+            # Poll for +CMTI (SMS notification) or +CUSD with balance data
             start = time.time()
             collected = ""
             sms_index = None
-            while time.time() - start < 30:
+            while time.time() - start < 20:
                 if self.ser.in_waiting:
                     chunk = self.ser.read(self.ser.in_waiting).decode(errors="ignore")
                     collected += chunk
@@ -143,15 +149,14 @@ class Modem:
                     # Some carriers return balance directly in CUSD
                     if "+CUSD:" in collected and re.search(r'\d+[.,]?\d*\s*(?:DH|MAD|dh|mad)', collected):
                         break
-                time.sleep(0.5)
+                time.sleep(0.2)
 
             logging.info(f"[{self.carrier}] BALANCE RAW: {collected}")
 
             # If we got an SMS notification, read that SMS
             sms_body = ""
             if sms_index is not None:
-                time.sleep(1)
-                resp = self.send_at(f'AT+CMGR={sms_index}', 2)
+                resp = self._send_raw_and_wait_ok(f'AT+CMGR={sms_index}', timeout=3)
                 logging.info(f"[{self.carrier}] BALANCE SMS: {resp}")
 
                 # Extract SMS body (line after +CMGR: header)
@@ -161,7 +166,7 @@ class Modem:
 
                 # Log and delete the SMS
                 self.log_sms("BALANCE_SMS", sms_body or resp)
-                self.send_at(f'AT+CMGD={sms_index}', 1)
+                self._send_raw_and_wait_ok(f'AT+CMGD={sms_index}', timeout=2)
 
             text_to_parse = sms_body or collected
 
@@ -256,7 +261,11 @@ class Modem:
 
     def modem_health_monitor(self):
         """Background thread: check modem health every 60s. Auto-recover.
+        Balance is checked every 15 min here (safety net) — the primary
+        balance refresh happens in the worker after each recharge.
         SKIPS entirely when a recharge is in progress to avoid modem interference."""
+        BALANCE_INTERVAL = 15 * 60  # 15 minutes
+        last_balance_check = 0  # force a check on first healthy cycle
         time.sleep(60)  # Initial delay (modem was just checked at startup)
         while True:
             # Fast-path: skip without even trying to acquire the lock
@@ -284,7 +293,11 @@ class Modem:
                         if stat in (0, 3):
                             self.force_register()
                     else:
-                        self.check_balance()
+                        # Only check balance every 15 min (worker checks after each recharge)
+                        now = time.time()
+                        if now - last_balance_check >= BALANCE_INTERVAL:
+                            self.check_balance()
+                            last_balance_check = now
                 else:
                     logging.error(f"[{self.carrier}] MODEM: health check failed")
                     self.cfg["modem_ok"] = False

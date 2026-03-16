@@ -14252,3 +14252,2748 @@ OK
 OK
 
 2026-03-15 14:46:48,376 [orange] RECHARGE FINISHED: success | La recharge a ete effectuee, le compte Recharge du client 0684447232 a ete credite de 5 DH. Votre solde restant est de 305 DH.
+2026-03-15 22:06:46,088 GATEWAY STARTED
+2026-03-15 22:06:46,088 [orange] Initializing modem on /dev/ttyAMA0...
+2026-03-15 22:06:47,089 [orange] AT AT | AT
+OK
+
+2026-03-15 22:06:48,089 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:06:51,090 [orange] AT AT+CMGL="ALL" | AT+CMGL="ALL"
+OK
+
+2026-03-15 22:06:54,091 [orange] AT AT+CMGDA="DEL ALL" | AT+CMGDA="DEL ALL"
+OK
+
+2026-03-15 22:06:54,091 [orange] SMS: all messages deleted
+2026-03-15 22:06:55,091 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:06:55,092 [orange] Modem initialized OK
+2026-03-15 22:06:55,092 [inwi] Initializing modem on /dev/ttyAMA4...
+2026-03-15 22:06:56,092 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:06:57,093 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:07:00,093 [inwi] AT AT+CMGL="ALL" | AT+CMGL="ALL"
+OK
+
+2026-03-15 22:07:03,094 [inwi] AT AT+CMGDA="DEL ALL" | AT+CMGDA="DEL ALL"
+OK
+
+2026-03-15 22:07:03,094 [inwi] SMS: all messages deleted
+2026-03-15 22:07:04,094 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:07:04,095 [inwi] Modem initialized OK
+2026-03-15 22:07:04,095 [orange] Worker and health monitor threads started
+2026-03-15 22:07:04,096 [inwi] Worker and health monitor threads started
+2026-03-15 22:07:04,096 Starting API server on port 5000 with 2 modem(s): ['orange', 'inwi']
+2026-03-15 22:07:04,110 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.8:5000
+2026-03-15 22:07:04,110 [33mPress CTRL+C to quit[0m
+2026-03-15 22:07:37,630 [orange] AT AT | AT
+OK
+
+2026-03-15 22:07:38,631 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 27,0
+
+OK
+
+2026-03-15 22:07:39,631 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:07:40,632 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:07:41,632 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 17,0
+
+OK
+
+2026-03-15 22:07:42,632 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:07:42,634 127.0.0.1 - - [15/Mar/2026 22:07:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:07:44,633 [orange] AT AT | AT
+OK
+
+2026-03-15 22:07:45,633 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 27,0
+
+OK
+
+2026-03-15 22:07:46,634 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:07:47,634 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:07:48,635 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 17,0
+
+OK
+
+2026-03-15 22:07:49,636 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:07:49,637 127.0.0.1 - - [15/Mar/2026 22:07:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:08:05,095 [orange] AT AT | AT
+OK
+
+2026-03-15 22:08:05,096 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:08:06,096 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:08:06,096 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:08:07,096 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:08:07,097 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:08:12,097 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:08:12,097 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:08:14,098 [inwi] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:08:16,098 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:08:17,099 [inwi] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","111","","26/03/15,22:08:09+00"
+Votre solde est de 4.00 DH.
+
+OK
+
+2026-03-15 22:08:17,099 [inwi] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","111","","26/03/15,22:08:09+00"
+Votre solde est de 4.00 DH.
+
+OK
+
+2026-03-15 22:08:17,100 [inwi] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:08:18,100 [inwi] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:08:18,101 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:08:19,099 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:08:10+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:08:19,099 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:08:10+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:08:19,099 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:08:20,099 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:08:20,100 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:08:28,330 [orange] AT AT | AT
+OK
+
+2026-03-15 22:08:29,330 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 27,5
+
+OK
+
+2026-03-15 22:08:30,331 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:08:31,331 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:08:32,332 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 17,0
+
+OK
+
+2026-03-15 22:08:33,332 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:08:33,333 127.0.0.1 - - [15/Mar/2026 22:08:33] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:08:34,933 127.0.0.1 - - [15/Mar/2026 22:08:34] "POST /recharge HTTP/1.1" 200 -
+2026-03-15 22:08:34,933 [inwi] WORKER: === START task RCH-QQJZJIBXCYYT for 0722661028 ===
+2026-03-15 22:08:35,973 CALLBACK RCH-QQJZJIBXCYYT: 200 {"status":"ok","processed":"processing"}
+2026-03-15 22:08:35,973 [inwi] RECHARGE START: 0722661028 5 MAD (offer=0)
+2026-03-15 22:08:36,974 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:08:37,415 [orange] AT AT | AT
+OK
+
+2026-03-15 22:08:38,415 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:08:39,415 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:08:39,416 127.0.0.1 - - [15/Mar/2026 22:08:39] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:08:39,974 [inwi] AT AT+CMGL="ALL" | AT+CMGL="ALL"
+OK
+
+2026-03-15 22:08:41,480 [orange] AT AT | AT
+OK
+
+2026-03-15 22:08:42,480 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:08:42,974 [inwi] AT AT+CMGDA="DEL ALL" | AT+CMGDA="DEL ALL"
+OK
+
+2026-03-15 22:08:42,975 [inwi] SMS: all messages deleted
+2026-03-15 22:08:43,481 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:08:43,482 127.0.0.1 - - [15/Mar/2026 22:08:43] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:08:43,975 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 17,0
+
+OK
+
+2026-03-15 22:08:44,976 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:08:45,977 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:08:46,977 [inwi] AT AT+CNMI=2,2,0,0,0 | AT+CNMI=2,2,0,0,0
+OK
+
+2026-03-15 22:08:46,977 [inwi] RECHARGE: sending USSD command: *139*0722661028*5*0#
+2026-03-15 22:08:47,978 [inwi] RECHARGE: ATD response: ATD *139*0722661028*5*0#;
+OK
+2026-03-15 22:08:47,978 [inwi] SMS: waiting for confirmation (timeout=60s, pre=0 bytes)...
+2026-03-15 22:08:50,479 [inwi] SMS RAW CHUNK: '\r\n+CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15\r\n'
+2026-03-15 22:08:54,480 [inwi] SMS RAW CHUNK: '\r\n+CMT: "111","","26/03/15,22:08:49+00"\r\nVotre solde est insuffisant. Veuillez r'
+2026-03-15 22:08:56,480 [inwi] SMS RAW EXTRA: 'echarger votre compte. Votre solde est de 4.00 DH.\r\n'
+2026-03-15 22:08:56,481 [inwi] SMS LOGGED: 111
+2026-03-15 22:08:57,482 [inwi] AT ATH | ATH
+OK
+
+2026-03-15 22:08:57,482 [inwi] RECHARGE FINISHED: balance_error | Votre solde est insuffisant. Veuillez recharger votre compte. Votre solde est de 4.00 DH.
+2026-03-15 22:08:57,495 [inwi] ORDER RCH-QQJZJIBXCYYT -> balance_error | Votre solde est insuffisant. Veuillez recharger votre compte. Votre solde est de 4.00 DH.
+2026-03-15 22:08:58,462 CALLBACK RCH-QQJZJIBXCYYT: 200 {"status":"ok","processed":"balance_error"}
+2026-03-15 22:08:58,463 [inwi] WORKER: === END task RCH-QQJZJIBXCYYT — waiting for next ===
+2026-03-15 22:09:19,101 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:09:20,101 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:09:21,102 [orange] AT AT | AT
+OK
+
+2026-03-15 22:09:21,102 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:09:22,103 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:09:23,103 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:09:26,103 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:09:28,103 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:09:37,105 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:09:40,106 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:09:26+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:09:40,106 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:09:26+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:09:40,106 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:09:41,107 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:09:41,107 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:09:42,654 127.0.0.1 - - [15/Mar/2026 22:09:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:09:44,482 [orange] AT AT | AT
+OK
+
+2026-03-15 22:09:45,483 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:09:46,483 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:09:49,484 127.0.0.1 - - [15/Mar/2026 22:09:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:09:56,110 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:09:23+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:09:56,110 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:09:56,111 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:10:42,107 [orange] AT AT | AT
+OK
+
+2026-03-15 22:10:43,108 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:10:44,108 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:10:49,109 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:10:51,262 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:10:52,262 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:10:53,110 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:10:53,262 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:10:53,263 127.0.0.1 - - [15/Mar/2026 22:10:53] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:10:56,110 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:10:47+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:10:56,111 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:10:47+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:10:56,111 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:10:57,112 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:10:57,112 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:10:57,112 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:10:58,113 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:10:58,113 [orange] AT AT | AT
+OK
+
+2026-03-15 22:10:59,113 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:10:59,114 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:11:00,114 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:11:03,116 127.0.0.1 - - [15/Mar/2026 22:11:03] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:11:04,114 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:11:34,121 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:11:01+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:11:34,122 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:11:34,122 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:11:38,012 [orange] AT AT | AT
+OK
+
+2026-03-15 22:11:39,013 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:11:40,013 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:11:41,014 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:11:42,015 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:11:43,015 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:11:43,016 127.0.0.1 - - [15/Mar/2026 22:11:43] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:11:45,369 [orange] AT AT | AT
+OK
+
+2026-03-15 22:11:46,369 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:11:47,369 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:11:48,370 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:11:49,370 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:11:50,371 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:11:50,371 127.0.0.1 - - [15/Mar/2026 22:11:50] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:11:58,113 [orange] AT AT | AT
+OK
+
+2026-03-15 22:11:59,113 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:12:00,114 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:12:05,114 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
+2026-03-15 22:12:15,117 [orange] BALANCE RAW: 
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
++CMTI: "SM",1
+
+2026-03-15 22:12:18,117 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:12:04+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:12:18,117 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:12:04+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:12:18,117 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:12:19,118 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:12:19,118 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:12:35,123 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:12:36,124 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:12:37,125 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:12:37,989 [orange] AT AT | AT
+OK
+
+2026-03-15 22:12:38,989 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:12:39,990 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:12:42,125 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:12:42,991 127.0.0.1 - - [15/Mar/2026 22:12:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:12:44,979 [orange] AT AT | AT
+OK
+
+2026-03-15 22:12:45,979 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:12:46,979 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:12:49,981 127.0.0.1 - - [15/Mar/2026 22:12:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:13:12,135 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:12:39+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:13:12,135 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:13:12,135 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:13:20,118 [orange] AT AT | AT
+OK
+
+2026-03-15 22:13:21,119 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:13:22,119 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:13:27,120 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est 
+2026-03-15 22:13:36,622 [orange] BALANCE RAW: en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
++CMTI: "SM",1
+
+2026-03-15 22:13:39,622 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:13:26+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:13:39,623 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:13:26+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:13:39,623 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:13:40,402 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:13:40,623 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:13:40,624 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:13:41,402 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:13:42,403 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:13:42,403 127.0.0.1 - - [15/Mar/2026 22:13:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:13:44,338 [orange] AT AT | AT
+OK
+
+2026-03-15 22:13:45,338 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:13:46,339 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:13:47,339 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:13:48,340 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:13:49,340 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:13:49,341 127.0.0.1 - - [15/Mar/2026 22:13:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:14:13,135 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:14:14,136 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:14:15,136 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:14:20,137 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:14:37,540 [orange] AT AT | AT
+OK
+
+2026-03-15 22:14:38,541 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:14:39,541 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:14:41,624 [orange] AT AT | AT
+OK
+
+2026-03-15 22:14:42,542 127.0.0.1 - - [15/Mar/2026 22:14:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:14:42,624 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:14:43,625 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:14:48,625 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera env
+2026-03-15 22:14:49,633 127.0.0.1 - - [15/Mar/2026 22:14:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:14:50,144 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:14:17+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:14:50,144 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:14:50,144 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:14:53,627 [orange] BALANCE RAW: oy dans quelques instants.", 15
+
++CMTI: "SM",1
+
+2026-03-15 22:14:56,628 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:14:47+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:14:56,628 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:14:47+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:14:56,628 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:14:57,628 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:14:57,629 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:15:37,529 [orange] AT AT | AT
+OK
+
+2026-03-15 22:15:38,529 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:15:39,530 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:15:40,531 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:15:41,531 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:15:42,532 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:15:42,532 127.0.0.1 - - [15/Mar/2026 22:15:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:15:46,712 [orange] AT AT | AT
+OK
+
+2026-03-15 22:15:47,712 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:15:48,713 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:15:49,714 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:15:50,715 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:15:51,716 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:15:51,717 127.0.0.1 - - [15/Mar/2026 22:15:51] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:15:52,717 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:15:53,717 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:15:54,718 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:15:58,629 [orange] AT AT | AT
+OK
+
+2026-03-15 22:15:59,630 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:15:59,718 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:16:00,630 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:16:05,630 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:16:14,633 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:16:17,634 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:16:03+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:16:17,634 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:16:03+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:16:17,634 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:16:18,635 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:16:18,635 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:16:29,725 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:15:57+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:16:29,725 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:16:29,725 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:16:37,549 [orange] AT AT | AT
+OK
+
+2026-03-15 22:16:38,549 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,5
+
+OK
+
+2026-03-15 22:16:39,550 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:16:40,550 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:16:41,551 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:16:42,551 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:16:42,552 127.0.0.1 - - [15/Mar/2026 22:16:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:16:44,801 [orange] AT AT | AT
+OK
+
+2026-03-15 22:16:45,801 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,5
+
+OK
+
+2026-03-15 22:16:46,802 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:16:47,802 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:16:48,802 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:16:49,803 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:16:49,804 127.0.0.1 - - [15/Mar/2026 22:16:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:17:19,635 [orange] AT AT | AT
+OK
+
+2026-03-15 22:17:20,637 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:17:21,637 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:17:26,638 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:17:30,726 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:17:31,726 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:17:32,727 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:17:35,640 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:17:37,728 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:17:38,641 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:17:24+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:17:38,641 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:17:24+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:17:38,641 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:17:39,642 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:17:39,642 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:17:42,487 127.0.0.1 - - [15/Mar/2026 22:17:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:17:44,409 [orange] AT AT | AT
+OK
+
+2026-03-15 22:17:45,410 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:17:46,410 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:17:49,411 127.0.0.1 - - [15/Mar/2026 22:17:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:18:07,734 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:17:34+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:18:07,734 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:18:07,734 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:18:38,030 [orange] AT AT | AT
+OK
+
+2026-03-15 22:18:39,030 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:18:40,031 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:18:41,031 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:18:41,031 [orange] AT AT | AT
+OK
+
+2026-03-15 22:18:42,032 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:18:42,032 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:18:43,032 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:18:43,033 127.0.0.1 - - [15/Mar/2026 22:18:43] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:18:43,033 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:18:47,999 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:18:48,034 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:18:48,999 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:18:50,000 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:18:50,000 127.0.0.1 - - [15/Mar/2026 22:18:50] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:18:57,037 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:19:00,037 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:18:46+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:19:00,038 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:18:46+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:19:00,038 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:19:01,038 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:19:01,039 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:19:08,735 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:19:09,735 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:19:10,736 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:19:15,736 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:19:37,449 [orange] AT AT | AT
+OK
+
+2026-03-15 22:19:38,450 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:19:39,450 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:19:42,451 127.0.0.1 - - [15/Mar/2026 22:19:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:19:44,238 [orange] AT AT | AT
+OK
+
+2026-03-15 22:19:45,238 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:19:45,743 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:19:13+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:19:45,743 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:19:45,743 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:19:46,239 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:19:47,239 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:19:48,240 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:19:49,240 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:19:49,241 127.0.0.1 - - [15/Mar/2026 22:19:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:20:02,039 [orange] AT AT | AT
+OK
+
+2026-03-15 22:20:03,039 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:20:04,040 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:20:09,040 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:20:13,542 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:20:16,542 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:20:08+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:20:16,542 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:20:08+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:20:16,543 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:20:17,543 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:20:17,543 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:20:37,521 [orange] AT AT | AT
+OK
+
+2026-03-15 22:20:38,521 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:20:39,522 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:20:40,522 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:20:41,523 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:20:42,523 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:20:42,524 127.0.0.1 - - [15/Mar/2026 22:20:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:20:44,348 [orange] AT AT | AT
+OK
+
+2026-03-15 22:20:45,349 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:20:46,349 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:20:46,743 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:20:47,744 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:20:48,744 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:20:49,350 127.0.0.1 - - [15/Mar/2026 22:20:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:20:53,745 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:21:18,544 [orange] AT AT | AT
+OK
+
+2026-03-15 22:21:19,544 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:21:20,544 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:21:23,751 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:20:51+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:21:23,751 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:21:23,751 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:21:25,545 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:21:30,047 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:21:33,047 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:21:24+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:21:33,047 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:21:24+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:21:33,048 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:21:34,048 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:21:34,048 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:21:37,618 [orange] AT AT | AT
+OK
+
+2026-03-15 22:21:38,619 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:21:39,619 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:21:40,619 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:21:41,620 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:21:42,621 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:21:42,621 127.0.0.1 - - [15/Mar/2026 22:21:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:21:44,445 [orange] AT AT | AT
+OK
+
+2026-03-15 22:21:45,446 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:21:46,446 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:21:47,447 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:21:48,447 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:21:49,447 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:21:49,448 127.0.0.1 - - [15/Mar/2026 22:21:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:22:24,752 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:22:25,752 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:22:26,753 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:22:31,753 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:22:35,049 [orange] AT AT | AT
+OK
+
+2026-03-15 22:22:36,049 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:22:37,049 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:22:42,053 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:22:42,508 127.0.0.1 - - [15/Mar/2026 22:22:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:22:46,557 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:22:49,459 127.0.0.1 - - [15/Mar/2026 22:22:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:22:49,558 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:22:40+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:22:49,558 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:22:40+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:22:49,558 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:22:50,558 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:22:50,558 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:23:01,760 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:22:28+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:23:01,761 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:23:01,761 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:23:37,873 [orange] AT AT | AT
+OK
+
+2026-03-15 22:23:38,875 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:23:39,876 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:23:40,876 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:23:41,877 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:23:42,877 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:23:42,878 127.0.0.1 - - [15/Mar/2026 22:23:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:23:44,836 [orange] AT AT | AT
+OK
+
+2026-03-15 22:23:45,837 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:23:46,838 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:23:47,838 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:23:48,838 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:23:49,839 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:23:49,840 127.0.0.1 - - [15/Mar/2026 22:23:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:23:51,559 [orange] AT AT | AT
+OK
+
+2026-03-15 22:23:52,559 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:23:53,560 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:23:58,560 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:24:02,761 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:24:03,762 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:24:04,762 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:24:07,062 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:24:09,763 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:24:10,063 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:23:56+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:24:10,063 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:23:56+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:24:10,063 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:24:11,063 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:24:11,064 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:24:37,547 [orange] AT AT | AT
+OK
+
+2026-03-15 22:24:38,548 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:24:39,548 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:24:39,769 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:24:06+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:24:39,769 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:24:39,769 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:24:40,769 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:24:41,770 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:24:42,770 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:24:42,774 127.0.0.1 - - [15/Mar/2026 22:24:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:24:44,780 [orange] AT AT | AT
+OK
+
+2026-03-15 22:24:45,781 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:24:46,781 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:24:47,782 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:24:48,782 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:24:49,782 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:24:49,783 127.0.0.1 - - [15/Mar/2026 22:24:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:25:12,064 [orange] AT AT | AT
+OK
+
+2026-03-15 22:25:13,064 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:25:14,065 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:25:19,066 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:25:21,067 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:25:24,067 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:25:17+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:25:24,070 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:25:17+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:25:24,070 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:25:25,071 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:25:25,071 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:25:37,594 [orange] AT AT | AT
+OK
+
+2026-03-15 22:25:38,595 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:25:39,595 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:25:40,596 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:25:41,596 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:25:42,597 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:25:42,597 127.0.0.1 - - [15/Mar/2026 22:25:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:25:43,598 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:25:44,546 [orange] AT AT | AT
+OK
+
+2026-03-15 22:25:44,598 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:25:45,546 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:25:45,599 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:25:46,546 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:25:49,547 127.0.0.1 - - [15/Mar/2026 22:25:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:25:50,599 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:26:20,606 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:25:47+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:26:20,606 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:26:20,606 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:26:26,071 [orange] AT AT | AT
+OK
+
+2026-03-15 22:26:27,072 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:26:28,072 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:26:33,073 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:26:37,574 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:26:40,574 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:26:32+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:26:40,574 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:26:32+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:26:40,575 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:26:40,756 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:26:41,575 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:26:41,575 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:26:41,757 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:26:42,757 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:26:42,758 127.0.0.1 - - [15/Mar/2026 22:26:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:26:44,717 [orange] AT AT | AT
+OK
+
+2026-03-15 22:26:45,717 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 28,0
+
+OK
+
+2026-03-15 22:26:46,718 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:26:47,718 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:26:48,719 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 19,0
+
+OK
+
+2026-03-15 22:26:49,720 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:26:49,720 127.0.0.1 - - [15/Mar/2026 22:26:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:27:21,606 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:27:22,608 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:27:23,608 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:27:28,609 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:27:37,517 [orange] AT AT | AT
+OK
+
+2026-03-15 22:27:38,517 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 27,0
+
+OK
+
+2026-03-15 22:27:39,518 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:27:42,519 127.0.0.1 - - [15/Mar/2026 22:27:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:27:42,576 [orange] AT AT | AT
+OK
+
+2026-03-15 22:27:43,576 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:27:44,577 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:27:49,425 127.0.0.1 - - [15/Mar/2026 22:27:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:27:49,577 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:27:58,615 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:27:25+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:27:58,615 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:27:58,616 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:27:59,079 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:28:02,080 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:27:48+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:28:02,080 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:27:48+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:28:02,080 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:28:03,080 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:28:03,081 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:28:37,579 [orange] AT AT | AT
+OK
+
+2026-03-15 22:28:38,580 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:28:39,580 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:28:40,581 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:28:41,581 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:28:42,582 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:28:42,582 127.0.0.1 - - [15/Mar/2026 22:28:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:28:44,492 [orange] AT AT | AT
+OK
+
+2026-03-15 22:28:45,492 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:28:46,493 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:28:47,493 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:28:48,494 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:28:49,494 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:28:49,495 127.0.0.1 - - [15/Mar/2026 22:28:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:28:59,616 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:29:00,617 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:29:01,617 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:29:04,081 [orange] AT AT | AT
+OK
+
+2026-03-15 22:29:05,081 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:29:06,082 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:29:06,618 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:29:11,082 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:29:12,583 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:29:15,583 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:29:08+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:29:15,583 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:29:08+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:29:15,584 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:29:16,585 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:29:16,585 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:29:36,624 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:29:03+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:29:36,624 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:29:36,624 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:29:37,562 [orange] AT AT | AT
+OK
+
+2026-03-15 22:29:38,562 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 27,0
+
+OK
+
+2026-03-15 22:29:39,563 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:29:40,563 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:29:41,564 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:29:42,564 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:29:42,565 127.0.0.1 - - [15/Mar/2026 22:29:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:29:44,512 [orange] AT AT | AT
+OK
+
+2026-03-15 22:29:45,513 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 27,0
+
+OK
+
+2026-03-15 22:29:46,514 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:29:47,515 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:29:48,515 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:29:49,516 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:29:49,517 127.0.0.1 - - [15/Mar/2026 22:29:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:30:17,585 [orange] AT AT | AT
+OK
+
+2026-03-15 22:30:18,586 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:30:19,586 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:30:24,587 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera env
+2026-03-15 22:30:34,089 [orange] BALANCE RAW: oy dans quelques instants.", 15
+
++CMTI: "SM",1
+
+2026-03-15 22:30:37,089 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:30:23+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:30:37,090 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:30:23+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:30:37,090 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:30:37,625 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:30:38,090 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:30:38,090 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:30:38,625 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:30:39,091 [orange] AT AT | AT
+OK
+
+2026-03-15 22:30:39,626 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:30:40,091 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 27,0
+
+OK
+
+2026-03-15 22:30:41,092 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:30:44,092 127.0.0.1 - - [15/Mar/2026 22:30:44] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:30:44,626 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:30:46,096 [orange] AT AT | AT
+OK
+
+2026-03-15 22:30:47,097 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 27,0
+
+OK
+
+2026-03-15 22:30:48,097 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:30:51,098 127.0.0.1 - - [15/Mar/2026 22:30:51] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:31:14,632 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:30:41+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:31:14,633 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:31:14,633 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:31:37,802 [orange] AT AT | AT
+OK
+
+2026-03-15 22:31:38,802 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:31:39,803 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:31:40,803 [orange] AT AT | AT
+OK
+
+2026-03-15 22:31:40,803 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:31:41,804 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:31:41,804 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:31:42,805 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:31:42,805 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:31:42,808 127.0.0.1 - - [15/Mar/2026 22:31:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:31:47,805 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:31:47,812 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:31:48,813 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:31:49,814 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:31:49,815 127.0.0.1 - - [15/Mar/2026 22:31:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:31:52,307 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:31:55,307 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:31:46+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:31:55,308 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:31:46+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:31:55,308 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:31:56,308 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:31:56,309 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:32:15,633 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:32:16,634 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:32:17,637 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:32:22,637 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:32:38,641 [orange] AT AT | AT
+OK
+
+2026-03-15 22:32:39,642 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:32:40,642 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:32:43,643 127.0.0.1 - - [15/Mar/2026 22:32:43] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:32:45,631 [orange] AT AT | AT
+OK
+
+2026-03-15 22:32:46,631 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:32:47,632 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:32:50,633 127.0.0.1 - - [15/Mar/2026 22:32:50] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:32:52,646 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:32:19+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:32:52,646 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:32:52,646 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:32:57,310 [orange] AT AT | AT
+OK
+
+2026-03-15 22:32:58,310 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:32:59,311 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:33:04,311 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:33:08,813 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:33:11,813 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:33:03+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:33:11,814 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:33:03+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:33:11,814 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:33:12,815 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:33:12,815 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:33:37,401 [orange] AT AT | AT
+OK
+
+2026-03-15 22:33:38,405 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 25,0
+
+OK
+
+2026-03-15 22:33:39,405 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:33:40,406 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:33:41,406 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:33:42,407 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:33:42,407 127.0.0.1 - - [15/Mar/2026 22:33:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:33:44,290 [orange] AT AT | AT
+OK
+
+2026-03-15 22:33:45,291 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 27,0
+
+OK
+
+2026-03-15 22:33:46,291 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:33:47,292 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:33:48,292 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:33:49,293 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:33:49,293 127.0.0.1 - - [15/Mar/2026 22:33:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:33:53,647 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:33:54,647 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:33:55,648 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:34:00,648 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:34:13,815 [orange] AT AT | AT
+OK
+
+2026-03-15 22:34:14,816 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:34:15,816 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:34:20,817 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
+2026-03-15 22:34:25,818 [orange] BALANCE RAW: 
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
++CMTI: "SM",1
+
+2026-03-15 22:34:28,819 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:34:20+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:34:28,819 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:34:20+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:34:28,819 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:34:29,820 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:34:29,820 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:34:30,655 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:33:57+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:34:30,655 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:34:30,655 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:34:37,540 [orange] AT AT | AT
+OK
+
+2026-03-15 22:34:38,541 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:34:39,541 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:34:40,542 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:34:41,542 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 17,0
+
+OK
+
+2026-03-15 22:34:42,543 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:34:42,546 127.0.0.1 - - [15/Mar/2026 22:34:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:34:44,428 [orange] AT AT | AT
+OK
+
+2026-03-15 22:34:45,428 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:34:46,429 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:34:47,429 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:34:48,430 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 17,0
+
+OK
+
+2026-03-15 22:34:49,430 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:34:49,431 127.0.0.1 - - [15/Mar/2026 22:34:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:35:30,820 [orange] AT AT | AT
+OK
+
+2026-03-15 22:35:31,655 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:35:31,821 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:35:32,656 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:35:32,822 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:35:33,656 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:35:37,822 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:35:38,657 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:35:42,690 127.0.0.1 - - [15/Mar/2026 22:35:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:35:46,824 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:35:49,780 127.0.0.1 - - [15/Mar/2026 22:35:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:35:49,826 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:35:36+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:35:49,826 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:35:36+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:35:49,826 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:35:50,826 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:35:50,827 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:36:08,663 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:35:35+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:36:08,664 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:36:08,664 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:36:37,520 [orange] AT AT | AT
+OK
+
+2026-03-15 22:36:38,520 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:36:39,521 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:36:40,521 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:36:41,522 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:36:42,522 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:36:42,523 127.0.0.1 - - [15/Mar/2026 22:36:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:36:44,299 [orange] AT AT | AT
+OK
+
+2026-03-15 22:36:45,299 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:36:46,300 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:36:47,300 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:36:48,301 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:36:49,301 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:36:49,302 127.0.0.1 - - [15/Mar/2026 22:36:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:36:51,827 [orange] AT AT | AT
+OK
+
+2026-03-15 22:36:52,827 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:36:53,828 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:36:58,828 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:37:02,830 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:37:05,830 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:36:57+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:37:05,831 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:36:57+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:37:05,831 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:37:06,832 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:37:06,832 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:37:09,665 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:37:10,665 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:37:11,666 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:37:16,667 [inwi] AT AT+CUSD=1,"*139*5#",15 | AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
+2026-03-15 22:37:37,479 [orange] AT AT | AT
+OK
+
+2026-03-15 22:37:38,480 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 27,0
+
+OK
+
+2026-03-15 22:37:39,480 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:37:42,481 127.0.0.1 - - [15/Mar/2026 22:37:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:37:44,459 [orange] AT AT | AT
+OK
+
+2026-03-15 22:37:45,460 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:37:46,460 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:37:46,673 [inwi] BALANCE RAW: 
++CMT: "111","","26/03/15,22:37:13+00"
+Votre solde est de 4.00 DH.
+
+2026-03-15 22:37:46,673 [inwi] SMS LOGGED: BALANCE_USSD
+2026-03-15 22:37:46,673 [inwi] BALANCE: 4.0 MAD
+2026-03-15 22:37:47,673 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:37:48,674 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:37:49,675 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:37:49,676 127.0.0.1 - - [15/Mar/2026 22:37:49] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:38:07,832 [orange] AT AT | AT
+OK
+
+2026-03-15 22:38:08,833 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:38:09,833 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-15 22:38:14,834 [orange] AT AT+CUSD=1,"#555*4*2#",15 | AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
+2026-03-15 22:38:19,335 [orange] BALANCE RAW: 
++CMTI: "SM",1
+
+2026-03-15 22:38:22,336 [orange] AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:38:13+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:38:22,336 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/15,22:38:13+00"
+A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-15 22:38:22,336 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-15 22:38:23,336 [orange] AT AT+CMGD=1 | AT+CMGD=1
+OK
+
+2026-03-15 22:38:23,337 [orange] BALANCE: 305.0 MAD
+2026-03-15 22:38:37,512 [orange] AT AT | AT
+OK
+
+2026-03-15 22:38:38,513 [orange] AT AT+CSQ | AT+CSQ
++CSQ: 26,0
+
+OK
+
+2026-03-15 22:38:39,514 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-15 22:38:40,514 [inwi] AT AT | AT
+OK
+
+2026-03-15 22:38:41,514 [inwi] AT AT+CSQ | AT+CSQ
++CSQ: 18,0
+
+OK
+
+2026-03-15 22:38:42,515 [inwi] AT AT+CREG? | 
+2026-03-15 22:38:42,515 127.0.0.1 - - [15/Mar/2026 22:38:42] "GET /health HTTP/1.1" 200 -
+2026-03-15 22:38:44,429 [orange] AT AT | 
+2026-03-15 22:38:45,429 [inwi] AT AT | 
+2026-03-15 22:38:45,432 127.0.0.1 - - [15/Mar/2026 22:38:45] "GET /health HTTP/1.1" 200 -
+2026-03-16 13:53:08,924 GATEWAY STARTED
+2026-03-16 13:53:08,924 [orange] Initializing modem on /dev/ttyAMA0...
+2026-03-16 13:53:09,925 [orange] AT AT | AT
+OK
+
+2026-03-16 13:53:10,925 [orange] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-16 13:53:13,926 [orange] AT AT+CMGL="ALL" | AT+CMGL="ALL"
+OK
+
+2026-03-16 13:53:16,927 [orange] AT AT+CMGDA="DEL ALL" | AT+CMGDA="DEL ALL"
+OK
+
+2026-03-16 13:53:16,927 [orange] SMS: all messages deleted
+2026-03-16 13:53:17,928 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-16 13:53:17,928 [orange] Modem initialized OK
+2026-03-16 13:53:17,928 [inwi] Initializing modem on /dev/ttyAMA4...
+2026-03-16 13:53:18,928 [inwi] AT AT | AT
+OK
+
+2026-03-16 13:53:19,929 [inwi] AT AT+CMGF=1 | AT+CMGF=1
+OK
+
+2026-03-16 13:53:22,929 [inwi] AT AT+CMGL="ALL" | AT+CMGL="ALL"
++CMGL: 1,"REC UNREAD","inwi","","26/03/16,10:14:39+00"
+062F064A064506270020063106270628062D064A064600200645063900200069006E0077006900200020003A00200645064600200031003300200625064406490020003100380020064506270631063300200032003000320036002006310628062D064806270020003500300020062F06310647064500200639064806360020003200350020
+
++CMGL: 2,"REC UNREAD","inwi","","26/03/16,10:14:39+00"
+062F0631064706450020063906440649002006430644002006310648063406270631062C002000350030003000300020062F0631064706450020062F0631062A06480647062700200641002006270644062F064A064406310020062F064A0627064406430645
+
+OK
+
+2026-03-16 13:53:22,930 [inwi] SMS LOGGED: inwi
+2026-03-16 13:53:22,931 [inwi] SMS LOGGED: inwi
+2026-03-16 13:53:22,931 [inwi] SMS: saved 2 message(s) to message.log
+2026-03-16 13:53:25,931 [inwi] AT AT+CMGDA="DEL ALL" | AT+CMGDA="DEL ALL"
+OK
+
+2026-03-16 13:53:25,932 [inwi] SMS: all messages deleted
+2026-03-16 13:53:26,932 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-16 13:53:26,932 [inwi] Modem initialized OK
+2026-03-16 13:53:26,933 [orange] Worker and health monitor threads started
+2026-03-16 13:53:26,933 [inwi] Worker and health monitor threads started
+2026-03-16 13:53:26,933 Starting API server on port 5000 with 2 modem(s): ['orange', 'inwi']
+2026-03-16 13:53:26,943 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.8:5000
+2026-03-16 13:53:26,943 [33mPress CTRL+C to quit[0m
+2026-03-16 13:54:27,933 [orange] AT AT | AT
+OK
+
+2026-03-16 13:54:27,933 [inwi] AT AT | AT
+OK
+
+2026-03-16 13:54:28,933 [orange] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-16 13:54:28,934 [inwi] AT AT+CREG? | AT+CREG?
++CREG: 0,1
+
+OK
+
+2026-03-16 13:54:29,034 [orange] RAW_AT AT+CMGF=1 | AT+CMGF=1
+OK
+2026-03-16 13:54:29,035 [inwi] RAW_AT AT+CMGF=1 | AT+CMGF=1
+OK
+2026-03-16 13:54:35,638 [inwi] BALANCE RAW: AT+CUSD=1,"*139*5#",15
+OK
+
++CUSD: 0, "Un SMS vous sera envoy dans queslques secondes", 15
+
++CMTI: "SM",1
+
+2026-03-16 13:54:35,839 [inwi] RAW_AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","111","","26/03/16,13:54:31+00"
+Votre solde est de 4.00 DH.
+
+OK
+2026-03-16 13:54:35,839 [inwi] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","111","","26/03/16,13:54:31+00"
+Votre solde est de 4.00 DH.
+
+OK
+
+2026-03-16 13:54:35,840 [inwi] SMS LOGGED: BALANCE_SMS
+2026-03-16 13:54:36,040 [inwi] RAW_AT AT+CMGD=1 | AT+CMGD=1
+OK
+2026-03-16 13:54:36,041 [inwi] BALANCE: 4.0 MAD
+2026-03-16 13:54:38,240 [orange] BALANCE RAW: AT+CUSD=1,"#555*4*2#",15
+OK
+
++CUSD: 0, " Votre requte est en cours de traitement. Un message vous sera envoy dans quelques instants.", 15
+
++CMTI: "SM",1
+
+2026-03-16 13:54:38,540 [orange] RAW_AT AT+CMGR=1 | AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/16,13:54:32+00"
+A la date de 2026-03-16,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+2026-03-16 13:54:38,541 [orange] BALANCE SMS: AT+CMGR=1
++CMGR: "REC UNREAD","555","","26/03/16,13:54:32+00"
+A la date de 2026-03-16,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+
+OK
+
+2026-03-16 13:54:38,541 [orange] SMS LOGGED: BALANCE_SMS
+2026-03-16 13:54:38,641 [orange] RAW_AT AT+CMGD=1 | AT+CMGD=1
+OK
+2026-03-16 13:54:38,642 [orange] BALANCE: 305.0 MAD

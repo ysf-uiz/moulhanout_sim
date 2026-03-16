@@ -72,3 +72,69 @@
 2026-03-15 14:45:44 | [orange] FROM: BALANCE_USSD | MSG: +CMT: "555","","26/03/15,14:45:13+00"
 A la date de 2026-03-15,Votre solde recharge est de 310 dhs et votre solde d'encaissement est de 0 dhs.
 2026-03-15 14:46:47 | [orange] FROM: 139 | MSG: La recharge a ete effectuee, le compte Recharge du client 0684447232 a ete credite de 5 DH. Votre solde restant est de 305 DH.
+2026-03-15 22:08:17 | [inwi] FROM: BALANCE_SMS | MSG: Votre solde est de 4.00 DH.
+2026-03-15 22:08:19 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:08:56 | [inwi] FROM: 111 | MSG: Votre solde est insuffisant. Veuillez recharger votre compte. Votre solde est de 4.00 DH.
+2026-03-15 22:09:40 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:09:56 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:09:23+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:10:56 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:11:34 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:11:01+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:12:18 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:13:12 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:12:39+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:13:39 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:14:50 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:14:17+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:14:56 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:16:17 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:16:29 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:15:57+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:17:38 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:18:07 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:17:34+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:19:00 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:19:45 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:19:13+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:20:16 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:21:23 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:20:51+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:21:33 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:22:49 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:23:01 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:22:28+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:24:10 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:24:39 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:24:06+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:25:24 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:26:20 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:25:47+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:26:40 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:27:58 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:27:25+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:28:02 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:29:15 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:29:36 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:29:03+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:30:37 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:31:14 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:30:41+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:31:55 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:32:52 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:32:19+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:33:11 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:34:28 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:34:30 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:33:57+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:35:49 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:36:08 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:35:35+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:37:05 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-15 22:37:46 | [inwi] FROM: BALANCE_USSD | MSG: +CMT: "111","","26/03/15,22:37:13+00"
+Votre solde est de 4.00 DH.
+2026-03-15 22:38:22 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-15,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
+2026-03-16 13:53:22 | [inwi] FROM: inwi | MSG: 062F064A064506270020063106270628062D064A064600200645063900200069006E0077006900200020003A00200645064600200031003300200625064406490020003100380020064506270631063300200032003000320036002006310628062D064806270020003500300020062F06310647064500200639064806360020003200350020
+2026-03-16 13:53:22 | [inwi] FROM: inwi | MSG: 062F0631064706450020063906440649002006430644002006310648063406270631062C002000350030003000300020062F0631064706450020062F0631062A06480647062700200641002006270644062F064A064406310020062F064A0627064406430645
+2026-03-16 13:54:35 | [inwi] FROM: BALANCE_SMS | MSG: Votre solde est de 4.00 DH.
+2026-03-16 13:54:38 | [orange] FROM: BALANCE_SMS | MSG: A la date de 2026-03-16,Votre solde recharge est de 305 dhs et votre solde d'encaissement est de 0 dhs.
