@@ -261,11 +261,8 @@ class Modem:
 
     def modem_health_monitor(self):
         """Background thread: check modem health every 60s. Auto-recover.
-        Balance is checked every 15 min here (safety net) — the primary
-        balance refresh happens in the worker after each recharge.
+        Balance is checked ONLY after each recharge (in the worker), not here.
         SKIPS entirely when a recharge is in progress to avoid modem interference."""
-        BALANCE_INTERVAL = 15 * 60  # 15 minutes
-        last_balance_check = 0  # force a check on first healthy cycle
         time.sleep(60)  # Initial delay (modem was just checked at startup)
         while True:
             # Fast-path: skip without even trying to acquire the lock
@@ -292,12 +289,6 @@ class Modem:
                         logging.warning(f"[{self.carrier}] MODEM: alive but not registered (CREG={stat})")
                         if stat in (0, 3):
                             self.force_register()
-                    else:
-                        # Only check balance every 15 min (worker checks after each recharge)
-                        now = time.time()
-                        if now - last_balance_check >= BALANCE_INTERVAL:
-                            self.check_balance()
-                            last_balance_check = now
                 else:
                     logging.error(f"[{self.carrier}] MODEM: health check failed")
                     self.cfg["modem_ok"] = False
