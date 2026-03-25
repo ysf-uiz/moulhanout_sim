@@ -49,13 +49,63 @@ def api_recharge():
     # Insert with 'queued' to prevent duplicates
     database.insert_order(order_id, phone, price, offer, 'queued', carrier=carrier)
 
-    config.MODEMS[carrier]["task_queue"].put(data)
+    queued_task = {
+        "order_id": order_id,
+        "phone": phone,
+        "price": price,
+        "offer": offer,
+        "carrier": carrier,
+        "queued_at": time.time(),
+    }
+    config.MODEMS[carrier]["task_queue"].put(queued_task)
 
     return jsonify({
         "status": "queued",
         "order_id": order_id,
         "carrier": carrier,
         "queue": config.MODEMS[carrier]["task_queue"].qsize()
+    })
+
+
+# =====================
+# POST /cancel — Cancel a queued recharge before sending
+# =====================
+
+@app.route("/cancel", methods=["POST"])
+def api_cancel():
+    token = request.headers.get("token")
+    if token != config.API_TOKEN:
+        return jsonify({"status": "unauthorized"}), 403
+
+    data = request.json or {}
+    order_id = (data.get("order_id") or "").strip()
+    if not order_id:
+        return jsonify({"status": "error", "message": "order_id is required"}), 422
+
+    current = (database.get_order_status(order_id) or "").lower()
+    if not current:
+        return jsonify({"status": "not_found", "order_id": order_id}), 404
+
+    if current == "cancelled":
+        return jsonify({"status": "already_cancelled", "order_id": order_id})
+
+    if current in ("processing", "success", "failed", "rejected", "balance_error"):
+        return jsonify({
+            "status": "cannot_cancel",
+            "order_id": order_id,
+            "current_status": current,
+        })
+
+    cancelled = database.update_order_status_if(order_id, "cancelled", ["queued", "pending"])
+    if cancelled:
+        return jsonify({"status": "cancelled", "order_id": order_id})
+
+    # Race-safe fallback: status changed between read and update.
+    current = (database.get_order_status(order_id) or "unknown").lower()
+    return jsonify({
+        "status": "cannot_cancel",
+        "order_id": order_id,
+        "current_status": current,
     })
 
 

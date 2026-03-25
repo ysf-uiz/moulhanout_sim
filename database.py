@@ -111,6 +111,40 @@ def update_order_status(order_id, status):
             conn.close()
 
 
+def update_order_status_if(order_id, status, allowed_statuses):
+    """Update status only when current status is in allowed_statuses.
+
+    Returns True when one row was updated, False otherwise.
+    """
+    if not allowed_statuses:
+        return False
+
+    placeholders = ",".join(["?"] * len(allowed_statuses))
+    sql = f"""
+    UPDATE orders
+    SET status=?, date=datetime('now')
+    WHERE order_id=? AND status IN ({placeholders})
+    """
+
+    with _db_lock:
+        conn = _get_conn()
+        try:
+            cur = conn.execute(sql, (status, order_id, *allowed_statuses))
+            conn.commit()
+            return cur.rowcount > 0
+        finally:
+            conn.close()
+
+
+def claim_order_for_processing(order_id):
+    """Atomically move queued/pending order to processing.
+
+    Returns True if the order was claimed, False when it was cancelled,
+    already processed, or otherwise not claimable.
+    """
+    return update_order_status_if(order_id, "processing", ["queued", "pending"])
+
+
 def get_order_status(order_id):
     """Get the status of an order. Returns None if not found."""
     conn = _get_conn()

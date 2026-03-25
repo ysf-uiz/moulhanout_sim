@@ -21,6 +21,7 @@ For testing individual parts, run each module standalone:
 import threading
 import logging
 import time
+from datetime import datetime, timezone
 import config
 from modem import Modem
 import database
@@ -46,6 +47,14 @@ def recover_pending_orders(modems):
         order_id, phone, price, offer, carrier, status, _date = row
         carrier = (carrier or "").lower().strip()
 
+        queued_at_ts = time.time()
+        if _date:
+            try:
+                dt = datetime.strptime(_date, "%Y-%m-%d %H:%M:%S")
+                queued_at_ts = dt.replace(tzinfo=timezone.utc).timestamp()
+            except Exception:
+                pass
+
         if carrier not in config.MODEMS:
             skipped += 1
             logging.error(f"STARTUP RECOVERY: order {order_id} has unknown carrier '{carrier}', skipped")
@@ -65,6 +74,7 @@ def recover_pending_orders(modems):
             "price": price,
             "offer": offer,
             "carrier": carrier,
+            "queued_at": queued_at_ts,
         }
         config.MODEMS[carrier]["task_queue"].put(task)
         restored += 1

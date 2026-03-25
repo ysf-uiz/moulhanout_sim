@@ -89,11 +89,50 @@ def worker(modem_instance):
         price    = task["price"]
         offer    = task["offer"]
         order_id = task["order_id"]
+        queued_at = task.get("queued_at")
+
+        try:
+            queued_at_ts = float(queued_at)
+        except (TypeError, ValueError):
+            queued_at_ts = time.time()
+
+        waited_sec = max(0, int(time.time() - queued_at_ts))
+        max_wait_sec = max(1, int(getattr(config, "MAX_QUEUE_WAIT_SEC", 300)))
+
+        # If a request sits in queue too long, reject it without touching the modem.
+        if waited_sec > max_wait_sec:
+            timeout_msg = (
+                f"Queue timeout exceeded ({waited_sec}s > {max_wait_sec}s). "
+                "Recharge rejected before sending to modem"
+            )
+            timed_out = database.update_order_status_if(
+                order_id,
+                "rejected",
+                ["queued", "pending"],
+            )
+            if timed_out:
+                logging.warning(f"[{carrier}] ORDER {order_id}: {timeout_msg}")
+                notify_backend(order_id, "rejected", timeout_msg, is_final=True)
+            else:
+                current = database.get_order_status(order_id)
+                logging.info(
+                    f"[{carrier}] ORDER {order_id}: timeout check skipped (current_status={current})"
+                )
+            task_queue.task_done()
+            continue
+
+        # Atomically claim job for processing. If it was cancelled in the meantime,
+        # this will fail and the worker must skip sending.
+        claimed = database.claim_order_for_processing(order_id)
+        if not claimed:
+            current = database.get_order_status(order_id)
+            logging.info(
+                f"[{carrier}] ORDER {order_id}: skipped (not claimable, current_status={current})"
+            )
+            task_queue.task_done()
+            continue
 
         logging.info(f"[{carrier}] WORKER: === START task {order_id} for {phone} ===")
-
-        # Update local DB to 'processing'
-        database.update_order_status(order_id, "processing")
 
         # Notify Laravel that we started processing
         notify_backend(order_id, "processing", "Recharge started on gateway")
