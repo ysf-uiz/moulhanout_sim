@@ -117,11 +117,30 @@ def worker(modem_instance):
         database.update_order_status(order_id, result)
         logging.info(f"[{carrier}] ORDER {order_id} -> {result} | {raw_message}")
 
-        # Refresh balance after recharge (balance just changed)
-        try:
-            modem_instance.check_balance()
-        except Exception as e:
-            logging.warning(f"[{carrier}] ORDER {order_id}: post-recharge balance check failed | {e}")
+        # Refresh balance only when queue is drained, so pending orders are not delayed.
+        if task_queue.empty():
+            serial_lock = modem_instance.cfg.get("serial_lock")
+            acquired = True
+            if serial_lock is not None:
+                acquired = serial_lock.acquire(timeout=5)
+
+            try:
+                if not acquired:
+                    logging.info(f"[{carrier}] ORDER {order_id}: post-recharge balance skipped (modem busy)")
+                elif modem_instance.cfg.get("recharge_in_progress"):
+                    logging.info(f"[{carrier}] ORDER {order_id}: post-recharge balance skipped (recharge active)")
+                else:
+                    modem_instance.check_balance()
+            except Exception as e:
+                logging.warning(f"[{carrier}] ORDER {order_id}: post-recharge balance check failed | {e}")
+            finally:
+                if serial_lock is not None and acquired:
+                    serial_lock.release()
+        else:
+            logging.info(
+                f"[{carrier}] ORDER {order_id}: post-recharge balance skipped "
+                f"(pending queue={task_queue.qsize()})"
+            )
 
         # Notify Laravel backend with the final result (with retry)
         notify_backend(order_id, result, raw_message, is_final=True)

@@ -162,6 +162,27 @@ def get_recent_orders(limit=20, carrier=None):
         conn.close()
 
 
+def get_pending_orders(limit=500):
+    """Return oldest pending orders that must be (re)queued on startup.
+
+    Includes both:
+      - queued     : accepted but not yet picked by a worker
+      - processing : worker likely crashed/restarted before completion
+    """
+    conn = _get_conn()
+    try:
+        cur = conn.execute("""
+        SELECT order_id, phone, price, offer, carrier, status, date
+        FROM orders
+        WHERE status IN ('queued', 'processing')
+        ORDER BY id ASC
+        LIMIT ?
+        """, (limit,))
+        return cur.fetchall()
+    finally:
+        conn.close()
+
+
 # =====================
 # SELF-TEST
 # =====================

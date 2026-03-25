@@ -6,7 +6,9 @@ Run standalone to start just the API server (without worker/health threads):
 """
 
 from flask import Flask, request, jsonify
+import html
 import logging
+import time
 import config
 import database
 
@@ -76,69 +78,27 @@ def api_status(order_id):
 @app.route("/health")
 def api_health():
     result = {"modems": {}}
+    now = time.time()
 
     for carrier, cfg in config.MODEMS.items():
         modem_inst = modem_instances.get(carrier)
-
-        # If recharge is in progress, return cached state for this modem
-        if cfg["recharge_in_progress"]:
-            result["modems"][carrier] = {
-                "status": "busy",
-                "modem": cfg["modem_ok"],
-                "signal": -1,
-                "registered": True,
-                "creg_stat": -1,
-                "queue": cfg["task_queue"].qsize(),
-                "sim_balance": cfg["sim_balance"],
-                "recharge_in_progress": True,
-            }
-            continue
-
-        sig = 0
-        modem_alive = False
-        registered = False
-        creg_stat = -1
-        modem_status = "unknown"
-
-        if modem_inst:
-            acquired = cfg["serial_lock"].acquire(timeout=3)
-            try:
-                if acquired:
-                    if cfg["recharge_in_progress"]:
-                        result["modems"][carrier] = {
-                            "status": "busy",
-                            "modem": cfg["modem_ok"],
-                            "signal": -1,
-                            "registered": True,
-                            "creg_stat": -1,
-                            "queue": cfg["task_queue"].qsize(),
-                            "sim_balance": cfg["sim_balance"],
-                            "recharge_in_progress": True,
-                        }
-                        continue
-                    modem_alive = modem_inst.modem_check()
-                    if modem_alive:
-                        sig = modem_inst.get_signal()
-                        registered, creg_stat = modem_inst.check_registration()
-                else:
-                    modem_alive = cfg["modem_ok"]
-                    sig = -1
-                    creg_stat = -1
-            except:
-                pass
-            finally:
-                if acquired:
-                    cfg["serial_lock"].release()
+        recharging = bool(cfg.get("recharge_in_progress"))
+        modem_alive = bool(cfg.get("modem_ok", False))
+        sig = int(cfg.get("last_signal", -1))
+        registered = bool(cfg.get("last_registered", False))
+        creg_stat = int(cfg.get("last_creg_stat", -1))
+        last_check_ts = float(cfg.get("last_health_check_ts", 0) or 0)
+        health_age_sec = int(now - last_check_ts) if last_check_ts > 0 else None
 
         if not modem_inst:
             modem_status = "not_initialized"
+        elif recharging:
+            modem_status = "busy"
         elif not modem_alive:
             modem_status = "down"
-        elif not acquired:
-            modem_status = "busy"
         elif not registered:
             modem_status = "no_network"
-        elif sig < config.MIN_SIGNAL:
+        elif sig >= 0 and sig < config.MIN_SIGNAL:
             modem_status = "degraded"
         else:
             modem_status = "ok"
@@ -152,7 +112,8 @@ def api_health():
             "creg_stat": creg_stat,
             "queue": cfg["task_queue"].qsize(),
             "sim_balance": cfg["sim_balance"],
-            "recharge_in_progress": False,
+            "recharge_in_progress": recharging,
+            "health_age_sec": health_age_sec,
         }
 
     # Top-level status
@@ -168,11 +129,62 @@ def api_health():
 
 
 # =====================
+# GET /orders — Recent orders from database (JSON)
+# =====================
+
+@app.route("/orders")
+def api_orders():
+    carrier = request.args.get("carrier", "").lower().strip()
+
+    try:
+        limit = int(request.args.get("limit", "50"))
+    except ValueError:
+        limit = 50
+    limit = max(1, min(limit, 200))
+
+    if carrier and carrier not in config.MODEMS:
+        return jsonify({
+            "status": "error",
+            "message": f"Unknown carrier: {carrier}. Expected: {list(config.MODEMS.keys())}"
+        }), 400
+
+    rows = database.get_recent_orders(limit=limit, carrier=carrier or None)
+    orders = []
+    for row in rows:
+        order_id, phone, price, offer, order_carrier, status, date = row
+        orders.append({
+            "order_id": order_id,
+            "phone": phone,
+            "price": price,
+            "offer": offer,
+            "carrier": order_carrier,
+            "status": status,
+            "date": date,
+        })
+
+    return jsonify({
+        "status": "ok",
+        "count": len(orders),
+        "orders": orders,
+    })
+
+
+# =====================
 # GET / — Simple dashboard
 # =====================
 
 @app.route("/")
 def dashboard():
+    carrier_filter = request.args.get("carrier", "").lower().strip()
+    if carrier_filter and carrier_filter not in config.MODEMS:
+        carrier_filter = ""
+
+    try:
+        limit = int(request.args.get("limit", "20"))
+    except ValueError:
+        limit = 20
+    limit = max(1, min(limit, 100))
+
     total    = database.count_orders()
     success  = database.count_orders('success')
     failed   = database.count_orders('failed')
@@ -182,23 +194,13 @@ def dashboard():
 
     modem_sections = ""
     for carrier, cfg in config.MODEMS.items():
-        modem_inst = modem_instances.get(carrier)
-        recharging = cfg["recharge_in_progress"]
-        sig = 0
-        registered = False
-        creg_stat = -1
-
-        if modem_inst and not recharging:
-            acquired = cfg["serial_lock"].acquire(timeout=2)
-            try:
-                if acquired and not cfg["recharge_in_progress"]:
-                    sig = modem_inst.get_signal()
-                    registered, creg_stat = modem_inst.check_registration()
-            except:
-                pass
-            finally:
-                if acquired:
-                    cfg["serial_lock"].release()
+        recharging = bool(cfg.get("recharge_in_progress"))
+        sig = int(cfg.get("last_signal", -1))
+        registered = bool(cfg.get("last_registered", False))
+        creg_stat = int(cfg.get("last_creg_stat", -1))
+        last_check_ts = float(cfg.get("last_health_check_ts", 0) or 0)
+        health_age_sec = int(time.time() - last_check_ts) if last_check_ts > 0 else None
+        signal_label = f"{sig}/31" if sig >= 0 else "N/A"
 
         c_total = database.count_orders(carrier=carrier)
         c_success = database.count_orders('success', carrier=carrier)
@@ -208,16 +210,57 @@ def dashboard():
         <div style="border:1px solid #ccc; padding:10px; margin:10px; display:inline-block; vertical-align:top; min-width:250px;">
             <h3>{carrier.upper()}</h3>
             <p>Port: {cfg['serial_port']}</p>
-            <p>Signal: {sig}/31{' (recharging)' if recharging else ''}</p>
+            <p>Signal: {signal_label}{' (recharging)' if recharging else ''}</p>
             <p>Network: {creg_labels.get(creg_stat, 'Unknown')} (CREG={creg_stat})</p>
             <p>Modem: {'OK' if cfg['modem_ok'] else 'DOWN'}</p>
             <p>Balance: {cfg['sim_balance'] or 'N/A'}</p>
             <p>Recharging: {'YES' if recharging else 'NO'}</p>
+            <p>Last health update: {str(health_age_sec) + 's ago' if health_age_sec is not None else 'N/A'}</p>
             <p>Queue: {cfg['task_queue'].qsize()}</p>
             <hr>
             <p>Orders: {c_total} | OK: {c_success} | Failed: {c_failed}</p>
         </div>
         """
+
+    recent_orders = database.get_recent_orders(limit=limit, carrier=carrier_filter or None)
+    table_rows = ""
+    if recent_orders:
+        for order_id, phone, price, offer, carrier, status, date in recent_orders:
+            status_value = (status or "").lower()
+            if status_value == "success":
+                status_bg = "#d1fae5"
+                status_fg = "#065f46"
+            elif status_value in ("failed", "rejected"):
+                status_bg = "#fee2e2"
+                status_fg = "#991b1b"
+            else:
+                status_bg = "#fef3c7"
+                status_fg = "#92400e"
+
+            table_rows += f"""
+            <tr>
+                <td style=\"padding:8px; border-bottom:1px solid #eee;\">{html.escape(str(order_id or ''))}</td>
+                <td style=\"padding:8px; border-bottom:1px solid #eee;\">{html.escape(str(phone or ''))}</td>
+                <td style=\"padding:8px; border-bottom:1px solid #eee;\">{html.escape(str(price or ''))}</td>
+                <td style=\"padding:8px; border-bottom:1px solid #eee;\">{html.escape(str(offer or ''))}</td>
+                <td style=\"padding:8px; border-bottom:1px solid #eee;\">{html.escape(str(carrier or ''))}</td>
+                <td style=\"padding:8px; border-bottom:1px solid #eee;\">
+                    <span style=\"background:{status_bg}; color:{status_fg}; padding:2px 8px; border-radius:12px; font-weight:600;\">{html.escape(str(status or ''))}</span>
+                </td>
+                <td style=\"padding:8px; border-bottom:1px solid #eee;\">{html.escape(str(date or ''))}</td>
+            </tr>
+            """
+    else:
+        table_rows = """
+        <tr>
+            <td colspan=\"7\" style=\"padding:12px; text-align:center; color:#666;\">No orders found.</td>
+        </tr>
+        """
+
+    carrier_options = "<option value=''>All carriers</option>"
+    for carrier in config.MODEMS.keys():
+        selected = "selected" if carrier == carrier_filter else ""
+        carrier_options += f"<option value='{carrier}' {selected}>{carrier.upper()}</option>"
 
     return f"""
     <h2>Recharge Gateway</h2>
@@ -225,6 +268,33 @@ def dashboard():
     <hr>
     <h3>Totals</h3>
     <p>Total: {total} | Success: {success} | Failed: {failed} | Rejected: {rejected}</p>
+    <hr>
+    <h3>Recent Orders</h3>
+    <form method="GET" style="margin-bottom:12px;">
+        <label>Carrier:</label>
+        <select name="carrier">{carrier_options}</select>
+        <label style="margin-left:8px;">Limit:</label>
+        <input type="number" name="limit" min="1" max="100" value="{limit}" style="width:80px;">
+        <button type="submit">Filter</button>
+    </form>
+    <div style="overflow-x:auto; border:1px solid #ddd; border-radius:8px;">
+        <table style="width:100%; border-collapse:collapse;">
+            <thead style="background:#f6f6f6; text-align:left;">
+                <tr>
+                    <th style="padding:8px;">Order ID</th>
+                    <th style="padding:8px;">Phone</th>
+                    <th style="padding:8px;">Price</th>
+                    <th style="padding:8px;">Offer</th>
+                    <th style="padding:8px;">Carrier</th>
+                    <th style="padding:8px;">Status</th>
+                    <th style="padding:8px;">Updated At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {table_rows}
+            </tbody>
+        </table>
+    </div>
     """
 
 

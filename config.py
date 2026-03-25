@@ -18,6 +18,11 @@ API_TOKEN        = os.environ.get("GATEWAY_TOKEN", "123456SECRET")
 API_CALLBACK_URL = os.environ.get("API_CALLBACK_URL", "https://credit.o-dev.store/api/gateway/callback")
 MIN_SIGNAL       = 5           # Minimum CSQ signal level (0-31)
 DB_PATH          = "database.db"
+HEALTH_CHECK_INTERVAL_SEC = int(os.environ.get("HEALTH_CHECK_INTERVAL_SEC", "60"))
+MODEM_OFFLINE_ALERT_SEC = int(os.environ.get("MODEM_OFFLINE_ALERT_SEC", "300"))
+MODEM_OFFLINE_ALERT_RETRY_SEC = int(os.environ.get("MODEM_OFFLINE_ALERT_RETRY_SEC", "300"))
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
 
 # =====================
 # PER-MODEM CONFIG
@@ -29,6 +34,10 @@ MODEMS = {
         "baudrate":     9600,
         "modem_ok":     True,
         "sim_balance":  None,
+        "last_signal":  -1,
+        "last_registered": False,
+        "last_creg_stat": -1,
+        "last_health_check_ts": 0.0,
         "recharge_in_progress": False,
         "serial_lock":  threading.Lock(),
         "task_queue":   queue.Queue(),
@@ -40,6 +49,10 @@ MODEMS = {
         "baudrate":     9600,
         "modem_ok":     True,
         "sim_balance":  None,
+        "last_signal":  -1,
+        "last_registered": False,
+        "last_creg_stat": -1,
+        "last_health_check_ts": 0.0,
         "recharge_in_progress": False,
         "serial_lock":  threading.Lock(),
         "task_queue":   queue.Queue(),
@@ -76,6 +89,9 @@ if __name__ == "__main__":
     print(f"  CALLBACK_URL   : {API_CALLBACK_URL}")
     print(f"  MIN_SIGNAL     : {MIN_SIGNAL}")
     print(f"  DB_PATH        : {DB_PATH}")
+    print(f"  HEALTH_EVERY   : {HEALTH_CHECK_INTERVAL_SEC}s")
+    print(f"  OFFLINE_ALERT  : {MODEM_OFFLINE_ALERT_SEC}s")
+    print(f"  TELEGRAM_READY : {'YES' if TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID else 'NO'}")
     for carrier, cfg in MODEMS.items():
         print(f"\n  [{carrier.upper()}]")
         print(f"    SERIAL_PORT  : {cfg['serial_port']}")

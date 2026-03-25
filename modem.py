@@ -9,7 +9,10 @@ Run standalone to test a specific modem without the full server:
 import serial
 import time
 import re
+import json
 import logging
+import urllib.parse
+import urllib.request
 import config
 
 
@@ -27,6 +30,14 @@ class Modem:
         self.serial_lock = cfg["serial_lock"]
         self.recharge_code_template = cfg["recharge_code_template"]
         self.balance_ussd = cfg["balance_ussd"]
+        self.cfg.setdefault("last_signal", -1)
+        self.cfg.setdefault("last_registered", False)
+        self.cfg.setdefault("last_creg_stat", -1)
+        self.cfg.setdefault("last_health_check_ts", 0.0)
+        self.cfg.setdefault("offline_since_ts", 0.0)
+        self.cfg.setdefault("offline_alert_sent", False)
+        self.cfg.setdefault("offline_alert_last_try_ts", 0.0)
+        self.cfg.setdefault("telegram_chat_id_cache", "")
 
     # =====================
     # AT COMMAND
@@ -259,51 +270,216 @@ class Modem:
             self.cfg["modem_ok"] = False
             return False
 
+    def _update_health_cache(self, modem_alive, signal, registered, creg_stat):
+        """Update cached health values used by /health and dashboard endpoints."""
+        self.cfg["modem_ok"] = bool(modem_alive)
+        self.cfg["last_signal"] = int(signal) if signal is not None else -1
+        self.cfg["last_registered"] = bool(registered)
+        self.cfg["last_creg_stat"] = int(creg_stat) if creg_stat is not None else -1
+        self.cfg["last_health_check_ts"] = time.time()
+
+    def _send_telegram_message(self, text):
+        """Send a Telegram message using bot token + chat id from config."""
+        token = config.TELEGRAM_BOT_TOKEN
+        if not token:
+            return False
+
+        chat_id = self._resolve_telegram_chat_id()
+        if not chat_id:
+            logging.warning(
+                f"[{self.carrier}] MODEM ALERT: no Telegram chat id found. "
+                f"Send /start to the bot once or set TELEGRAM_CHAT_ID."
+            )
+            return False
+
+        url = f"https://api.telegram.org/bot{token}/sendMessage"
+        payload = urllib.parse.urlencode({
+            "chat_id": chat_id,
+            "text": text,
+            "disable_web_page_preview": "true",
+        }).encode("utf-8")
+
+        req = urllib.request.Request(url, data=payload, method="POST")
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                return 200 <= int(resp.getcode()) < 300
+        except Exception as e:
+            logging.error(f"[{self.carrier}] MODEM ALERT: Telegram send failed | {e}")
+            return False
+
+    def _discover_telegram_chat_id(self):
+        """Try to discover the latest chat id from Telegram getUpdates."""
+        token = config.TELEGRAM_BOT_TOKEN
+        if not token:
+            return ""
+
+        url = f"https://api.telegram.org/bot{token}/getUpdates?limit=20"
+        try:
+            with urllib.request.urlopen(url, timeout=10) as resp:
+                payload = resp.read().decode("utf-8", errors="ignore")
+                data = json.loads(payload)
+        except Exception as e:
+            logging.error(f"[{self.carrier}] MODEM ALERT: getUpdates failed | {e}")
+            return ""
+
+        if not data.get("ok"):
+            return ""
+
+        updates = data.get("result", [])
+        for upd in reversed(updates):
+            msg = upd.get("message") or upd.get("channel_post") or upd.get("edited_message")
+            if not isinstance(msg, dict):
+                continue
+            chat = msg.get("chat") or {}
+            chat_id = chat.get("id")
+            if chat_id is not None:
+                return str(chat_id)
+        return ""
+
+    def _resolve_telegram_chat_id(self):
+        """Resolve chat id from env, cache, or Telegram updates fallback."""
+        chat_id = (config.TELEGRAM_CHAT_ID or "").strip()
+        if chat_id:
+            return chat_id
+
+        cached = str(self.cfg.get("telegram_chat_id_cache", "") or "").strip()
+        if cached:
+            return cached
+
+        discovered = self._discover_telegram_chat_id()
+        if discovered:
+            self.cfg["telegram_chat_id_cache"] = discovered
+            logging.info(f"[{self.carrier}] MODEM ALERT: discovered Telegram chat id {discovered}")
+            return discovered
+        return ""
+
+    def _handle_offline_alert(self):
+        """Alert once when modem/network stays offline beyond configured threshold."""
+        now = time.time()
+        modem_ok = bool(self.cfg.get("modem_ok", False))
+        registered = bool(self.cfg.get("last_registered", False))
+        offline = (not modem_ok) or (not registered)
+
+        if not offline:
+            self.cfg["offline_since_ts"] = 0.0
+            self.cfg["offline_alert_sent"] = False
+            self.cfg["offline_alert_last_try_ts"] = 0.0
+            return
+
+        offline_since = float(self.cfg.get("offline_since_ts", 0) or 0)
+        if offline_since <= 0:
+            self.cfg["offline_since_ts"] = now
+            return
+
+        threshold_sec = max(60, int(config.MODEM_OFFLINE_ALERT_SEC))
+        offline_for = now - offline_since
+        if offline_for < threshold_sec:
+            return
+
+        if bool(self.cfg.get("offline_alert_sent", False)):
+            return
+
+        retry_sec = max(30, int(config.MODEM_OFFLINE_ALERT_RETRY_SEC))
+        last_try = float(self.cfg.get("offline_alert_last_try_ts", 0) or 0)
+        if (now - last_try) < retry_sec:
+            return
+        self.cfg["offline_alert_last_try_ts"] = now
+
+        if not config.TELEGRAM_BOT_TOKEN:
+            logging.warning(
+                f"[{self.carrier}] MODEM ALERT: Telegram not configured "
+                f"(needs TELEGRAM_BOT_TOKEN)"
+            )
+            return
+
+        signal = int(self.cfg.get("last_signal", -1))
+        creg_stat = int(self.cfg.get("last_creg_stat", -1))
+        text = (
+            f"Gateway alert: modem {self.carrier.upper()} offline for {int(offline_for)}s. "
+            f"modem_ok={modem_ok}, registered={registered}, signal={signal}, CREG={creg_stat}."
+        )
+        if self._send_telegram_message(text):
+            self.cfg["offline_alert_sent"] = True
+            logging.warning(f"[{self.carrier}] MODEM ALERT: Telegram sent (offline {int(offline_for)}s)")
+
     def modem_health_monitor(self):
         """Background thread: check modem health every 60s. Auto-recover.
         Balance is checked ONLY after each recharge (in the worker), not here.
         SKIPS entirely when a recharge is in progress to avoid modem interference."""
-        time.sleep(60)  # Initial delay (modem was just checked at startup)
+        interval = max(10, int(config.HEALTH_CHECK_INTERVAL_SEC))
+        time.sleep(interval)  # Initial delay (modem was just checked at startup)
         while True:
             # Fast-path: skip without even trying to acquire the lock
             if self.cfg["recharge_in_progress"]:
                 logging.info(f"[{self.carrier}] MODEM HEALTH: skipped — recharge in progress")
-                time.sleep(60)
+                self._handle_offline_alert()
+                time.sleep(interval)
                 continue
 
             acquired = self.serial_lock.acquire(timeout=5)
             if not acquired:
-                time.sleep(60)
+                self._handle_offline_alert()
+                time.sleep(interval)
                 continue
             try:
                 # Double-check INSIDE lock
                 if self.cfg["recharge_in_progress"]:
                     logging.info(f"[{self.carrier}] MODEM HEALTH: skipped — recharge started while waiting for lock")
-                    time.sleep(60)
-                    continue
-
-                if self.modem_check():
-                    self.cfg["modem_ok"] = True
-                    registered, stat = self.check_registration()
-                    if not registered:
-                        logging.warning(f"[{self.carrier}] MODEM: alive but not registered (CREG={stat})")
-                        if stat in (0, 3):
-                            self.force_register()
                 else:
-                    logging.error(f"[{self.carrier}] MODEM: health check failed")
-                    self.cfg["modem_ok"] = False
-                    self.modem_reset()
+                    if self.modem_check():
+                        signal = self.get_signal()
+                        registered, stat = self.check_registration()
+                        self._update_health_cache(True, signal, registered, stat)
+                        if not registered:
+                            logging.warning(f"[{self.carrier}] MODEM: alive but not registered (CREG={stat})")
+                            if stat in (0, 3):
+                                self.force_register()
+                    else:
+                        logging.error(f"[{self.carrier}] MODEM: health check failed")
+                        self._update_health_cache(False, -1, False, -1)
+                        self.modem_reset()
             except Exception as e:
                 logging.error(f"[{self.carrier}] MODEM: health monitor error | {e}")
-                self.cfg["modem_ok"] = False
+                self._update_health_cache(False, -1, False, -1)
             finally:
                 self.serial_lock.release()
 
-            time.sleep(60)
+            self._handle_offline_alert()
+            time.sleep(interval)
 
     # =====================
     # SMS PARSER
     # =====================
+
+    def _classify_sms_status(self, text):
+        """Classify recharge result from an SMS body.
+
+        Returns one of: success, rejected, balance_error, or None when unknown.
+        """
+        low = text.lower()
+
+        # Balance error (French + Arabic)
+        if any(kw in low for kw in ["insuffisant", "solde insuffisant"]) or \
+           any(kw in text for kw in ["رصيد غير كافي", "غير كافي", "الرصيد غير كاف"]):
+            return "balance_error"
+
+        # Success (French + Arabic)
+        if any(kw in low for kw in [
+            "effectuee", "effectue", "succes", "success", "credite", "recharge a ete",
+            "a ete recharge", "a ete recharge de", "solde restant est",
+            "votre solde recharge est de", "solde d'encaissement"
+        ]) or \
+           any(kw in text for kw in ["تمت", "بنجاح", "تم شحن", "تمت العملية", "تم التعبئة"]):
+            return "success"
+
+        # Rejected/invalid request (French + Arabic)
+        if any(kw in low for kw in [
+            "rejete", "refuse", "erreur", "echoue", "failure", "failed", "invalide", "incorrect",
+            "inexistante", "numero compose est correct"
+        ]) or any(kw in text for kw in ["مرفوض", "خطأ", "فشل", "غير صالح", "غير صحيح", "رفض"]):
+            return "rejected"
+
+        return None
 
     def read_sms(self, timeout=60, pre_collected=""):
         """Wait for an incoming SMS and parse the recharge result.
@@ -325,30 +501,31 @@ class Modem:
                         collected += extra
                         logging.info(f"[{self.carrier}] SMS RAW EXTRA: {repr(extra)}")
 
-                    sender = "Unknown"
-                    match = re.search(r'\+CMT:\s*"([^"]*)"', collected)
-                    if match:
-                        sender = match.group(1)
+                    # Parse all +CMT SMS blocks and classify from newest to oldest.
+                    # This avoids using an older balance-only SMS as the final result.
+                    sms_blocks = re.findall(
+                        r'\+CMT:\s*"([^"]*)".*?\r?\n(.+?)(?=\r?\n\+CMT:|\Z)',
+                        collected,
+                        re.DOTALL,
+                    )
 
-                    body_match = re.search(r'\+CMT:.*?\r?\n(.+)', collected, re.DOTALL)
-                    body = body_match.group(1).strip() if body_match else collected
+                    if sms_blocks:
+                        # Log latest block for visibility in message.log
+                        latest_sender, latest_body = sms_blocks[-1]
+                        latest_body = latest_body.strip()
+                        self.log_sms(latest_sender or "Unknown", latest_body)
 
-                    self.log_sms(sender, body)
+                        for sender, body in reversed(sms_blocks):
+                            body = body.strip()
+                            status = self._classify_sms_status(body)
+                            if status:
+                                return status, body
 
-                    low = body.lower()
-                    # Balance error (French + Arabic)
-                    if any(kw in low for kw in ["insuffisant", "solde insuffisant"]) or \
-                       any(kw in body for kw in ["رصيد غير كافي", "غير كافي", "الرصيد غير كاف"]):
-                        return "balance_error", body
-                    # Success (French + Arabic)
-                    if any(kw in low for kw in ["effectuee", "effectue", "succes", "success", "credite", "recharge a ete"]) or \
-                       any(kw in body for kw in ["تمت", "بنجاح", "تم شحن", "تمت العملية", "تم التعبئة"]):
-                        return "success", body
-                    # Rejected (French + Arabic)
-                    if any(kw in low for kw in ["rejete", "refuse", "erreur", "echoue", "failure", "failed", "invalide", "incorrect"]) or \
-                       any(kw in body for kw in ["مرفوض", "خطأ", "فشل", "غير صالح", "غير صحيح", "رفض"]):
-                        return "rejected", body
-                    return "unknown", body
+                        return "unknown", latest_body
+
+                    # Fallback when +CMT exists but regex extraction fails
+                    fallback_status = self._classify_sms_status(collected)
+                    return fallback_status or "unknown", collected.strip()
 
             time.sleep(0.5)
 

@@ -20,12 +20,56 @@ For testing individual parts, run each module standalone:
 
 import threading
 import logging
+import time
 import config
 from modem import Modem
 import database
 import worker
 import api
 from api import app
+
+
+def recover_pending_orders(modems):
+    """Re-enqueue pending orders after process restart.
+
+    Queue data lives in memory, so queued/processing rows can be left behind
+    in SQLite if the process restarts. This function restores them.
+    """
+    pending = database.get_pending_orders(limit=1000)
+    if not pending:
+        return
+
+    restored = 0
+    skipped = 0
+
+    for row in pending:
+        order_id, phone, price, offer, carrier, status, _date = row
+        carrier = (carrier or "").lower().strip()
+
+        if carrier not in config.MODEMS:
+            skipped += 1
+            logging.error(f"STARTUP RECOVERY: order {order_id} has unknown carrier '{carrier}', skipped")
+            continue
+
+        if carrier not in modems:
+            skipped += 1
+            logging.error(f"STARTUP RECOVERY: modem '{carrier}' unavailable, order {order_id} kept pending")
+            continue
+
+        if status == "processing":
+            database.update_order_status(order_id, "queued")
+
+        task = {
+            "order_id": order_id,
+            "phone": phone,
+            "price": price,
+            "offer": offer,
+            "carrier": carrier,
+        }
+        config.MODEMS[carrier]["task_queue"].put(task)
+        restored += 1
+
+    logging.warning(f"STARTUP RECOVERY: restored={restored}, skipped={skipped}")
 
 
 if __name__ == "__main__":
@@ -41,12 +85,25 @@ if __name__ == "__main__":
 
             # Initial setup: check modem + clean SMS + ensure network
             with cfg["serial_lock"]:
-                m.modem_check()
+                alive = m.modem_check()
+                cfg["modem_ok"] = alive
                 m.delete_all_sms()
-                registered, stat = m.check_registration()
-                if not registered:
+                signal = -1
+                registered = False
+                stat = -1
+                if alive:
+                    signal = m.get_signal()
+                    registered, stat = m.check_registration()
+                if alive and not registered:
                     logging.warning(f"[{carrier}] STARTUP: not registered (CREG={stat}), forcing...")
                     m.force_register()
+                    signal = m.get_signal()
+                    registered, stat = m.check_registration()
+
+                cfg["last_signal"] = signal
+                cfg["last_registered"] = registered
+                cfg["last_creg_stat"] = stat
+                cfg["last_health_check_ts"] = time.time()
 
             modems[carrier] = m
             logging.info(f"[{carrier}] Modem initialized OK")
@@ -56,6 +113,9 @@ if __name__ == "__main__":
 
     # Make modem instances accessible to api.py
     api.modem_instances = modems
+
+    # Rebuild in-memory queues from DB state after restart
+    recover_pending_orders(modems)
 
     # Start per-modem worker and health threads
     for carrier, m in modems.items():
