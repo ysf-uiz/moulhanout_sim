@@ -5,7 +5,7 @@ Run standalone to start just the API server (without worker/health threads):
     python api.py
 """
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect, url_for
 import html
 import logging
 import time
@@ -20,6 +20,11 @@ app = Flask(__name__)
 
 # Populated by index.py after creating Modem instances
 modem_instances = {}  # {"orange": Modem, "inwi": Modem}
+
+
+def _clean_message(value, limit=220):
+    text = " ".join(str(value or "").split())
+    return text[:limit]
 
 
 def _is_admin_authorized(req):
@@ -180,6 +185,40 @@ def api_admin_orange_topup():
 
 
 # =====================
+# POST /view/orange/sim-recharge — Dashboard top-up (no API token)
+# =====================
+
+@app.route("/view/orange/sim-recharge", methods=["POST"])
+def view_orange_sim_recharge():
+    code = (request.form.get("code") or "").strip().replace(" ", "")
+    if not code:
+        return redirect(url_for("dashboard", topup_status="error", topup_message="code is required"))
+
+    modem = modem_instances.get("orange")
+    if not modem:
+        return redirect(url_for("dashboard", topup_status="error", topup_message="orange modem is not initialized"))
+
+    orange_queue = config.MODEMS["orange"]["task_queue"]
+    if modem.cfg.get("recharge_in_progress"):
+        return redirect(url_for("dashboard", topup_status="error", topup_message="orange modem is busy"))
+
+    if orange_queue.qsize() > 0:
+        return redirect(url_for(
+            "dashboard",
+            topup_status="error",
+            topup_message=f"orange queue not empty (queue={orange_queue.qsize()})",
+        ))
+
+    success, response_text = modem.orange_topup_sim(code)
+    safe_message = _clean_message(str(response_text).replace(code, "***"))
+
+    if not success:
+        return redirect(url_for("dashboard", topup_status="error", topup_message=safe_message or "top-up failed"))
+
+    return redirect(url_for("dashboard", topup_status="success", topup_message="orange top-up command sent"))
+
+
+# =====================
 # GET /status/<order_id> — Check recharge status
 # =====================
 
@@ -305,6 +344,22 @@ def dashboard():
         limit = 20
     limit = max(1, min(limit, 100))
 
+    topup_status = request.args.get("topup_status", "").lower().strip()
+    topup_message = _clean_message(request.args.get("topup_message", ""))
+
+    if topup_status == "success":
+        topup_banner = (
+            f"<div style='background:#dcfce7;color:#166534;padding:10px 12px;border-radius:8px;"
+            f"border:1px solid #86efac;margin:10px 0;'>{html.escape(topup_message or 'Top-up sent')}</div>"
+        )
+    elif topup_status == "error":
+        topup_banner = (
+            f"<div style='background:#fee2e2;color:#991b1b;padding:10px 12px;border-radius:8px;"
+            f"border:1px solid #fca5a5;margin:10px 0;'>{html.escape(topup_message or 'Top-up failed')}</div>"
+        )
+    else:
+        topup_banner = ""
+
     total    = database.count_orders()
     success  = database.count_orders('success')
     failed   = database.count_orders('failed')
@@ -388,6 +443,15 @@ def dashboard():
     <hr>
     <h3>Totals</h3>
     <p>Total: {total} | Success: {success} | Failed: {failed} | Rejected: {rejected}</p>
+    <hr>
+    <h3>Orange SIM Top-up (Dashboard only)</h3>
+    <p>Send directly from this system view without API token headers.</p>
+    {topup_banner}
+    <form method="POST" action="/view/orange/sim-recharge" style="display:flex; gap:8px; align-items:center; margin:10px 0 16px; flex-wrap:wrap;">
+        <label for="sim-code" style="font-weight:600;">Recharge code:</label>
+        <input id="sim-code" name="code" type="text" inputmode="numeric" pattern="[0-9]{6,32}" minlength="6" maxlength="32" required placeholder="ex: 123456789012" style="padding:8px 10px; border:1px solid #ccc; border-radius:6px; min-width:260px;">
+        <button type="submit" style="padding:8px 14px; border:none; border-radius:6px; background:#2563eb; color:#fff; cursor:pointer;">Send top-up</button>
+    </form>
     <hr>
     <h3>Recent Orders</h3>
     <form method="GET" style="margin-bottom:12px;">
