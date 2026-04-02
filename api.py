@@ -22,6 +22,29 @@ app = Flask(__name__)
 modem_instances = {}  # {"orange": Modem, "inwi": Modem}
 
 
+def _is_admin_authorized(req):
+    """Require both gateway token and admin token for privileged actions."""
+    token = req.headers.get("token")
+    admin_token = req.headers.get("admin-token") or req.headers.get("x-admin-token")
+
+    if token != config.API_TOKEN:
+        return False, (jsonify({"status": "unauthorized"}), 403)
+
+    if not config.ADMIN_TOKEN:
+        return False, (
+            jsonify({
+                "status": "forbidden",
+                "message": "admin token is not configured on gateway",
+            }),
+            403,
+        )
+
+    if admin_token != config.ADMIN_TOKEN:
+        return False, (jsonify({"status": "forbidden"}), 403)
+
+    return True, None
+
+
 # =====================
 # POST /recharge — Queue a new recharge
 # =====================
@@ -106,6 +129,53 @@ def api_cancel():
         "status": "cannot_cancel",
         "order_id": order_id,
         "current_status": current,
+    })
+
+
+# =====================
+# POST /admin/orange/topup — Admin-only Orange SIM top-up
+# =====================
+
+@app.route("/admin/orange/topup", methods=["POST"])
+def api_admin_orange_topup():
+    ok, error_response = _is_admin_authorized(request)
+    if not ok:
+        return error_response
+
+    data = request.json or {}
+    code = (data.get("code") or "").strip()
+    if not code:
+        return jsonify({"status": "error", "message": "code is required"}), 422
+
+    modem = modem_instances.get("orange")
+    if not modem:
+        return jsonify({"status": "error", "message": "orange modem is not initialized"}), 503
+
+    orange_queue = config.MODEMS["orange"]["task_queue"]
+    if modem.cfg.get("recharge_in_progress"):
+        return jsonify({
+            "status": "busy",
+            "message": "orange modem is currently processing a recharge",
+        }), 409
+
+    if orange_queue.qsize() > 0:
+        return jsonify({
+            "status": "busy",
+            "message": "orange queue is not empty; try after pending recharges are done",
+            "queue": orange_queue.qsize(),
+        }), 409
+
+    success, response_text = modem.orange_topup_sim(code)
+    if not success:
+        return jsonify({
+            "status": "failed",
+            "message": response_text,
+        }), 400
+
+    return jsonify({
+        "status": "sent",
+        "message": "orange top-up command sent successfully",
+        "modem_response": response_text,
     })
 
 

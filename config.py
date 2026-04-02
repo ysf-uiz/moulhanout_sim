@@ -15,6 +15,7 @@ import logging
 # =====================
 
 API_TOKEN        = os.environ.get("GATEWAY_TOKEN", "123456SECRET")
+ADMIN_TOKEN      = os.environ.get("GATEWAY_ADMIN_TOKEN", "").strip()
 API_CALLBACK_URL = os.environ.get("API_CALLBACK_URL", "https://credit.o-dev.store/api/gateway/callback")
 MIN_SIGNAL       = 5           # Minimum CSQ signal level (0-31)
 DB_PATH          = "database.db"
@@ -87,6 +88,7 @@ if __name__ == "__main__":
     print("  Gateway Config")
     print("=" * 40)
     print(f"  API_TOKEN      : {API_TOKEN[:4]}***")
+    print(f"  ADMIN_TOKEN    : {'SET' if ADMIN_TOKEN else 'NOT_SET'}")
     print(f"  CALLBACK_URL   : {API_CALLBACK_URL}")
     print(f"  MIN_SIGNAL     : {MIN_SIGNAL}")
     print(f"  DB_PATH        : {DB_PATH}")

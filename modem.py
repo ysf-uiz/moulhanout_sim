@@ -562,6 +562,57 @@ class Modem:
         logging.info(f"[{self.carrier}] RAW_AT {cmd} | {collected.strip()}")
         return collected
 
+    def _mask_secret(self, value):
+        """Mask sensitive values for logs and API responses."""
+        s = str(value or "").strip()
+        if len(s) <= 4:
+            return "****"
+        return f"{s[:2]}***{s[-2:]}"
+
+    def orange_topup_sim(self, code, timeout=20):
+        """Top up Orange SIM balance using admin-only USSD command.
+
+        Command format:
+            AT+CUSD=1,"*555*4*1*{code}#",15
+        """
+        if self.carrier != "orange":
+            return False, "topup_supported_only_for_orange"
+
+        raw_code = str(code or "").strip().replace(" ", "")
+        if not re.fullmatch(r"\d{6,32}", raw_code):
+            return False, "invalid_code_format"
+
+        ussd = f"*555*4*1*{raw_code}#"
+        masked_code = self._mask_secret(raw_code)
+
+        with self.serial_lock:
+            if self.cfg.get("recharge_in_progress"):
+                return False, "modem_busy_recharge_in_progress"
+
+            logging.info(f"[{self.carrier}] TOPUP: sending Orange top-up USSD (code={masked_code})")
+
+            self._flush_serial()
+            initial = self._send_raw_and_wait_ok(f'AT+CUSD=1,"{ussd}",15', timeout=8)
+            collected = initial
+
+            start = time.time()
+            while time.time() - start < timeout:
+                if self.ser.in_waiting:
+                    chunk = self.ser.read(self.ser.in_waiting).decode(errors="ignore")
+                    collected += chunk
+                    # Stop early when we see a clear modem result.
+                    if "+CUSD:" in collected or "ERROR" in collected:
+                        break
+                time.sleep(0.2)
+
+        # Never return raw recharge code in output.
+        safe_collected = collected.replace(raw_code, "***")
+
+        if "ERROR" in safe_collected and "+CUSD:" not in safe_collected:
+            return False, safe_collected.strip() or "topup_modem_error"
+
+        return True, safe_collected.strip() or "OK"
+
     def recharge(self, phone, price, offer):
         """Execute a recharge via USSD. Returns (status, message) tuple.
 
